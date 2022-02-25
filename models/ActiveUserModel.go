@@ -1,4 +1,4 @@
-package golibraries/models
+package models
 
 type ActiveUserModel struct {
 	ID        string     `gorm:"column:id;primaryKey" json:"id"`       //

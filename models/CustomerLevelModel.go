@@ -1,4 +1,4 @@
-package golibraries/models
+package models
 
 import (
 	"time"
