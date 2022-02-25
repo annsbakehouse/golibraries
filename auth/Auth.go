@@ -1,4 +1,4 @@
-package golibraries
+package auth
 
 import (
 	"fmt"

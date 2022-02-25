@@ -1,4 +1,4 @@
-package golibraries/library
+package library
 
 import (
 	"fmt"
