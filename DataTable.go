@@ -27,6 +27,9 @@ type DataTableOutput struct {
 	RecordsFiltered int `json:"recordsFiltered"`
 	Data interface{} `json:"data"`
 }
+func DataTableTest() (string){
+	return "Hello Success"
+}
 
 func DataTable(Config DataTableConfig) (interface{}, error) {
 	dbReader:= Config.Connection
