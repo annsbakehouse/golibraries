@@ -1,4 +1,4 @@
-package library
+package golibraries
 
 import (
 	"github.com/gin-gonic/gin"
