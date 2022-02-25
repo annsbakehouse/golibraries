@@ -1,4 +1,4 @@
-package golibraries
+package golibraries/library
 
 import (
 	"fmt"
@@ -9,7 +9,13 @@ import (
 	"gorm.io/gorm"
 	"os"
 )
-
+//ykzirla
+//DV8uJq2UWP6BgNa
+//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
+git config \
+  --global \
+  url."https://${ykzirla}:${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}@github.com".insteadOf \
+  "https://github.com/annsbakehouse/libraries"
 type DataTableConfig struct {
 	Primary string
 	Where string
