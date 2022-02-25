@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"annsbakehouse.com/erp1/models"
+	"github.com/annsbakehouse/golibraries/models"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
