@@ -8,7 +8,6 @@ import (
 type InventoryUnitModel struct {
 	ID           string     `gorm:"column:id;primary_key" json:"id"`
 	Name         string     `gorm:"column:name;default:null" json:"name"`
-	CountryId    string     `gorm:"column:country_id;default:null" json:"countryid"`
 	CreatedBy    NullString `gorm:"column:created_by" json:"created_by"`
 	CreatedAt    time.Time `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy    NullString `gorm:"column:updated_by" json:"updated_by"`
