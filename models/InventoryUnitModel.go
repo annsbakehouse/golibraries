@@ -35,7 +35,7 @@ type InventoryUnitInput struct {
 	Name	string	`json:"name" binding:"required"`
 }
 type InventoryUnitUpdate struct {
-	ID	String	`json:"id" binding:"required"`
+	ID	string	`json:"id" binding:"required"`
 	Name	string	`json:"name" binding:"required"`
 }
 //strcture output
