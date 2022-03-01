@@ -6,6 +6,7 @@ import (
 )
 
 type InventoryUnitModel struct {
+	gorm.Model
 	ID           string     `gorm:"column:id;primary_key" json:"id"`
 	Name         string     `gorm:"column:name;default:null" json:"name"`
 	CreatedBy    NullString `gorm:"column:created_by" json:"created_by"`
