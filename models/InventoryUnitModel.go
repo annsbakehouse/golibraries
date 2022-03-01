@@ -3,7 +3,6 @@ package models
 import (
 	"gorm.io/gorm"
 	"time"
-	"github.com/gin-gonic/gin"
 )
 
 type InventoryUnitModel struct {
