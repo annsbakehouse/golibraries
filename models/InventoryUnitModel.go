@@ -3,6 +3,8 @@ package models
 import (
 	"gorm.io/gorm"
 	"time"
+	"github.com/gin-gonic/gin"
+	auth "github.com/annsbakehouse/golibraries/auth"
 )
 
 type InventoryUnitModel struct {
@@ -12,7 +14,6 @@ type InventoryUnitModel struct {
 	CreatedAt    time.Time `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy    NullString `gorm:"column:updated_by" json:"updated_by"`
 	UpdatedAt    time.Time `gorm:"column:updated_at" json:"updated_at"`
-	DeletedBy    NullString `gorm:"column:updated_by" json:"deleted_by"`
 	DeletedAt    time.Time `gorm:"column:updated_at" json:"deleted_at"`
 }
 
@@ -26,6 +27,10 @@ func (p *InventoryUnitModel) BeforeCreate(tx *gorm.DB) (err error) {
 }
 
 func (p *InventoryUnitModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	return
+}
+func (p *InventoryUnitModel) BeforeDelete(tx *gorm.DB) (err error) {
+	p.UpdatedBy=p.UpdatedBy
 	return
 }
 
