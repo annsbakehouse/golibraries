@@ -30,6 +30,7 @@ func (p *InventoryUnitModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
 
+//strcture input
 type InventoryUnitInput struct {
 	Name	String	`json:"name" binding:"required"`
 }
@@ -37,6 +38,7 @@ type InventoryUnitUpdate struct {
 	ID	String	`json:"id" binding:"required"`
 	Name	String	`json:"name" binding:"required"`
 }
+//strcture output
 type InventoryUnitData struct {
 	ID	String	`json:"id"`
 	Name	String	`json:"name"`
