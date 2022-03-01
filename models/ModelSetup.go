@@ -18,7 +18,7 @@ import (
 	"database/sql"
 	"time"
 )
-
+var ActiveUser string
 func DbConnect() (*gorm.DB,*gorm.DB,error) {
 	//mysql connection
 	configDbMaster := os.Getenv("masterDsn");
