@@ -3,10 +3,10 @@ package models
 import (
 	"gorm.io/gorm"
 	"time"
+	"gorm.io/plugin/soft_delete"
 )
 
 type InventoryUnitModel struct {
-	gorm.Model
 	ID           string     `gorm:"column:id;primary_key" json:"id"`
 	Name         string     `gorm:"column:name;default:null" json:"name"`
 	CreatedBy    NullString `gorm:"column:created_by" json:"created_by"`
@@ -14,7 +14,7 @@ type InventoryUnitModel struct {
 	UpdatedBy    NullString `gorm:"column:updated_by" json:"updated_by"`
 	UpdatedAt    time.Time `gorm:"column:updated_at" json:"updated_at"`
 	DeletedBy	 NullString `gorm:"column:updated_by" json:"deleted_by"`
-	DeletedAt    time.Time `gorm:"column:updated_at" json:"deleted_at"`
+	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
 }
 
 // TableName sets the insert table name for this struct type
