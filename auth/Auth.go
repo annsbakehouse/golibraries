@@ -54,9 +54,8 @@ func TokenValid(c *gin.Context) {
 		tt := time.Now()
 		tFormat := tt.Format("2006-01-02 15:04:05")
 		var activeUserModel models.ActiveUserModel
-		var idActiveUser string
-		recActiveUser := dbReader.Select("id").First(&activeUserModel,"token=? AND expired_on>?",tokenString,tFormat).Scan(&idActiveUser)
-		models.ActiveUser = idActiveUser
+		recActiveUser := dbReader.Select("id").First(&activeUserModel,"token=? AND expired_on>?",tokenString,tFormat)
+		models.ActiveUser = activeUserModel.ID
 		if recActiveUser.Error==nil && recActiveUser.RowsAffected==1 {
 			return []byte(os.Getenv("secretKey")), nil
 		}
