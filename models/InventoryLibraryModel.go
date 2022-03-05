@@ -4,6 +4,8 @@ import (
 	"gorm.io/gorm"
 	"time"
 	"gorm.io/plugin/soft_delete"
+	// "fmt"
+	// library "github.com/annsbakehouse/golibraries/library"
 )
 
 type InventoryLibraryModel struct {
@@ -18,7 +20,7 @@ type InventoryLibraryModel struct {
 	UpdatedAt    time.Time `gorm:"column:updated_at" sql:"type:timestamp without time zone" json:"updated_at"`
 	DeletedBy	 NullString `gorm:"column:updated_by" json:"deleted_by"`
 	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
-	Child  []InventoryLibraryModel `gorm:"foreignKey:ParentID;references:ID" json:"child"`
+	Child  []InventoryLibraryModel `gorm:"foreignKey:ParentID;references:ID;constraint:OnDelete:CASCADE" json:"child"`
 }
 
 type InventoryLibraryDataModel struct {
@@ -28,7 +30,7 @@ type InventoryLibraryDataModel struct {
 	ParentID	 NullString	`gorm:"column:parent_id" json:"parent_id"`
 	Active	 	 int		`gorm:"column:active" json:"active"`
 	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at" json:"-"`
-	Child  []InventoryLibraryDataModel `gorm:"foreignKey:ParentID;references:ID" json:"child"`
+	Child  []InventoryLibraryDataModel `gorm:"foreignKey:ParentID;references:ID;Constraint:OnDelete:CASCADE" json:"child"`
 }
 
 
@@ -50,11 +52,14 @@ func (p *InventoryLibraryModel) BeforeUpdate(tx *gorm.DB) (err error) {
 func (p *InventoryLibraryModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *InventoryLibraryModel	) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
+func (p *InventoryLibraryModel) BeforeDelete(tx *gorm.DB) (err error) {
 	_,con,_ := DbConnect()
 	var model InventoryLibraryModel
 	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	con.Model(&model).Where("parent_id=?", p.ID).Update("deleted_by",ActiveUser)
+	return
+}
+func (p *InventoryLibraryModel) AfterDelete(tx *gorm.DB) (err error) {
 	return
 }
 

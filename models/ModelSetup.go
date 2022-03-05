@@ -84,7 +84,9 @@ func (ns NullString) MarshalJSON() ([]byte, error) {
 }
 
 func NullStringInput(s string) (NullString) {
-	
+	if len(s)==0 {
+		return NullString{sql.NullString{`null`,false}}		
+	}
 	return NullString{sql.NullString{s,true}}
 }
 
