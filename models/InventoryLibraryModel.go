@@ -23,6 +23,15 @@ type InventoryLibraryModel struct {
 	Child  []InventoryLibraryModel `gorm:"foreignKey:ParentID;references:ID;constraint:OnDelete:CASCADE" json:"child"`
 }
 
+type InventoryLibraryDataModelPreload struct {
+	ID           string     `gorm:"column:id;primary_key" json:"id"`
+	Name         string     `gorm:"column:name;default:null" json:"name"`
+	IsParent	 int		`gorm:"column:is_parent" json:"is_parent"`
+	ParentID	 NullString	`gorm:"column:parent_id" json:"parent_id"`
+	Active	 	 int		`gorm:"column:active" json:"active"`
+	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at" json:"-"`
+}
+
 type InventoryLibraryDataModel struct {
 	ID           string     `gorm:"column:id;primary_key" json:"id"`
 	Name         string     `gorm:"column:name;default:null" json:"name"`
@@ -30,7 +39,8 @@ type InventoryLibraryDataModel struct {
 	ParentID	 NullString	`gorm:"column:parent_id" json:"parent_id"`
 	Active	 	 int		`gorm:"column:active" json:"active"`
 	DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at" json:"-"`
-	Child  []InventoryLibraryDataModel `gorm:"foreignKey:ParentID;references:ID;Constraint:OnDelete:CASCADE" json:"child"`
+	Child  []InventoryLibraryDataModelPreload `gorm:"foreignKey:ParentID;references:ID;Constraint:OnDelete:CASCADE" json:"child"`
+	Parent InventoryLibraryDataModelPreload `gorm:"foreignKey:ID;references:ParentID" json:"parent"`
 }
 
 
@@ -39,6 +49,9 @@ func (p *InventoryLibraryModel) TableName() string {
 	return "inventory_library"
 }
 func (p *InventoryLibraryDataModel) TableName() string {
+	return "inventory_library"
+}
+func (p *InventoryLibraryDataModelPreload) TableName() string {
 	return "inventory_library"
 }
 
