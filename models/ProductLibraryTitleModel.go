@@ -32,7 +32,7 @@ type ProductLibraryTitleModelPreload struct {
 func (p *ProductLibraryTitleModel) TableName() string {
 	return "product_library_title"
 }
-func (p *ProductLibraryCategoryModelPreload) TableName() string {
+func (p *ProductLibraryTitleModelPreload) TableName() string {
 	return "product_library_title"
 }
 
