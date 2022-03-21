@@ -60,22 +60,20 @@ func (p *ProductModel) BeforeDelete(tx *gorm.DB) (err error) {
 
 //strcture input
 type ProductModelInput struct {
-	Name         	NullString     `gorm:"column:name;default:null" json:"name" binding:"required"`
-	PID          	NullString     `gorm:"column:pid;default:null" json:"pid" binding:"required"`
-	ProductTypeId	NullString		`gorm:"column:product_type_id" json:"product_type_id" binding:"required"`
-	Active	 	int		`gorm:"column:active" json:"active"`
-	ProductTypeId 	NullString		`gorm:"column:product_type_id" json:"product_type_id" binding:"required"`
+	Name         	string     	`json:"name" binding:"required"`
+	PID          	string     	`json:"pid" binding:"required"`
+	ProductTypeId	string		`json:"product_type_id" binding:"required"`
+	Active	 	int				`json:"active"`
+	ProductTypeId 	string		`json:"product_type_id" binding:"required"`
 }
 type ProductModelUpdate struct {
 	ID	string	`json:"id" binding:"required"`
-	Name         	NullString     `gorm:"column:name;default:null" json:"name" binding:"required"`
-	PID          	NullString     `gorm:"column:pid;default:null" json:"pid" binding:"required"`
-	ProductTypeId	NullString		`gorm:"column:product_type_id" json:"product_type_id" binding:"required"`
-	Active	 	int		`gorm:"column:active" json:"active"`
-	ProductTypeId 	NullString		`gorm:"column:product_type_id" json:"product_type_id" binding:"required"`
+	Name         	string     	`json:"name" binding:"required"`
+	PID          	string     	`json:"pid" binding:"required"`
+	ProductTypeId	string		`json:"product_type_id" binding:"required"`
+	Active	 	int				`json:"active"`
+	ProductTypeId 	string		`json:"product_type_id" binding:"required"`
 }
 type ProductModelInfo struct {
 	ID	string	`json:"id" binding:"required"`
 }
-
-
