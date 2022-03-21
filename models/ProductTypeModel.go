@@ -1,10 +1,5 @@
 package models
 
-import (
-	"time"
-	"gorm.io/gorm"
-)
-
 type ProductTypeModel struct {
 	ID        string     `gorm:"column:id;primary_key" json:"id"`     //
 	Name      NullString `gorm:"column:name" json:"name"`             //

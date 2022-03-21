@@ -6,7 +6,7 @@ import (
 	"gorm.io/plugin/soft_delete"
 )
 
-type ProductModel struct {
+type ProductModelModel struct {
 	ID           	string     `gorm:"column:id;primary_key" json:"id"`
 	Name         	NullString     `gorm:"column:name;default:null" json:"name"`
 	PID          	NullString     `gorm:"column:pid;default:null" json:"pid"`
@@ -21,7 +21,7 @@ type ProductModel struct {
 	ProductType  ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
 }
 
-type ProductModelPreload struct {
+type ProductModelModelPreload struct {
 	ID           	string     `gorm:"column:id;primary_key" json:"id"`
 	Name         	NullString     `gorm:"column:name;default:null" json:"name"`
 	PID          	NullString     `gorm:"column:pid;default:null" json:"pid"`
@@ -33,24 +33,24 @@ type ProductModelPreload struct {
 
 
 // TableName sets the insert table name for this struct type
-func (p *ProductModel) TableName() string {
+func (p *ProductModelModel) TableName() string {
 	return "product"
 }
-func (p *ProductModelPreload) TableName() string {
+func (p *ProductModelModelPreload) TableName() string {
 	return "product"
 }
 
-func (p *ProductModel) BeforeCreate(tx *gorm.DB) (err error) {
+func (p *ProductModelModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
-func (p *ProductModel) BeforeUpdate(tx *gorm.DB) (err error) {
+func (p *ProductModelModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *ProductModel) AfterUpdate(tx *gorm.DB) (err error) {
+func (p *ProductModelModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *ProductModel) BeforeDelete(tx *gorm.DB) (err error) {
+func (p *ProductModelModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// fmt.Println("Before Delete")
 	_,con,_ := DbConnect()
 	var model InventoryMaterialPackagingModel
@@ -59,19 +59,19 @@ func (p *ProductModel) BeforeDelete(tx *gorm.DB) (err error) {
 }
 
 //strcture input
-type ProductModelInput struct {
+type ProductModelModelInput struct {
 	Name         	string     	`json:"name" binding:"required"`
 	PID          	string     	`json:"pid" binding:"required"`
 	ProductTypeId	string		`json:"product_type_id" binding:"required"`
 	Active	 	int				`json:"active"`
 }
-type ProductModelUpdate struct {
+type ProductModelModelUpdate struct {
 	ID	string	`json:"id" binding:"required"`
 	Name         	string     	`json:"name" binding:"required"`
 	PID          	string     	`json:"pid" binding:"required"`
 	ProductTypeId	string		`json:"product_type_id" binding:"required"`
 	Active	 	int				`json:"active"`
 }
-type ProductModelInfo struct {
+type ProductModelModelInfo struct {
 	ID	string	`json:"id" binding:"required"`
 }
