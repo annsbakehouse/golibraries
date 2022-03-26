@@ -15,6 +15,12 @@ type DataPlatformModel struct {
 	// DeletedBy NullString `gorm:"column:deleted_by" json:"deleted_by"` //
 	// DeletedAt NullString `gorm:"column:deleted_at" json:"deleted_at"`
 }
+type DataPlatformModelPreload struct {
+	ID        string     `gorm:"column:id;primary_key" json:"id"`      //
+	Name      string     `gorm:"column:name;default:null" json:"name"` //
+	// DeletedBy NullString `gorm:"column:deleted_by" json:"deleted_by"` //
+	// DeletedAt NullString `gorm:"column:deleted_at" json:"deleted_at"`
+}
 
 // info dataplatform
 type DataPlatformInfoForm struct {
@@ -34,6 +40,9 @@ type DataPlatformUpdateForm struct {
 }
 // TableName sets the insert table name for this struct type
 func (d *DataPlatformModel) TableName() string {
+	return "platform"
+}
+func (d *DataPlatformModelPreload) TableName() string {
 	return "platform"
 }
 

@@ -26,11 +26,11 @@ type ProductModelPreload struct {
 	Name         	NullString     `gorm:"column:name;default:null" json:"name"`
 	PID          	NullString     `gorm:"column:pid;default:null" json:"pid"`
 	ProductTypeId	NullString		`gorm:"column:product_type_id" json:"product_type_id"`
-	Active	 	int		`gorm:"column:active" json:"active"`
-	ProductType  ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
+	Active	 		int		`gorm:"column:active" json:"active"`
+	ProductType  	ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
+	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
+	ModelData	[]ProductModelDataPreload `gorm:"foreignKey:ProductId;references:ID" json:"model_data"`
 }
-
-
 
 // TableName sets the insert table name for this struct type
 func (p *ProductModel) TableName() string {
