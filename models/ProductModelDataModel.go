@@ -39,6 +39,7 @@ type ProductModelDataPreload struct {
 	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 	ModelData	ProductModelModelPreload `gorm:"foreignKey:ID;references:ProductModelId" json:"model_data"`
 	PlatformData []ProductPlatformModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"platform"`
+	Pricing []ProductPricingModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"pricing"`
 }
 
 
