@@ -19,16 +19,30 @@ import (
 	"time"
 )
 var ActiveUser string
-func DbConnect() (*gorm.DB,*gorm.DB,error) {
-	//mysql connection
+var DbConnection *gorm.DB
+func Connection() (*gorm.DB,error){
 	configDbMaster := os.Getenv("masterDsn");
 	dbMaster, err := gorm.Open(postgres.Open(configDbMaster),&gorm.Config{
 		Logger:logger.Default.LogMode(logger.Info),
 		QueryFields: true,
 	})
 	if err != nil {
-		return nil,nil,fmt.Errorf("Master Database Connection Error")
+		return nil,fmt.Errorf("Master Database Connection Error")
 	}
+	return dbMaster,nil
+}
+func DbConnect() (*gorm.DB,*gorm.DB,error) {
+	//mysql connection
+	// configDbMaster := os.Getenv("masterDsn");
+	// dbMaster, err := gorm.Open(postgres.Open(configDbMaster),&gorm.Config{
+	// 	Logger:logger.Default.LogMode(logger.Info),
+	// 	QueryFields: true,
+	// })
+	// if err != nil {
+	// 	return nil,nil,fmt.Errorf("Master Database Connection Error")
+	// }
+	dbMaster := DbConnection
+	//dbMaster := dbConnection
 	//end mysql connection
 
 	//arango connection
@@ -101,6 +115,13 @@ func (ni NullInt64) MarshalJSON() ([]byte, error) {
 		return json.Marshal(ni.Int64)
 	}
 	return []byte(`null`),nil
+}
+
+func NullInt64Input(s int64) (NullInt64) {
+	if s==0 {
+		return NullInt64{sql.NullInt64{0,false}}		
+	}
+	return NullInt64{sql.NullInt64{s,true}}
 }
 
 //parse null time on model
