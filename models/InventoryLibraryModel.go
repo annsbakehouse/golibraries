@@ -18,7 +18,7 @@ type InventoryLibraryModel struct {
 	CreatedAt    time.Time 		`gorm:"column:created_at" json:"_"`
 	UpdatedBy    NullString 	`gorm:"column:updated_by" json:"updated_by"`
 	UpdatedAt    time.Time `gorm:"column:updated_at" sql:"type:timestamp without time zone" json:"updated_at"`
-	DeletedBy	 NullString `gorm:"column:updated_by" json:"deleted_by"`
+	DeletedBy	 NullString `gorm:"column:deleted_by" json:"deleted_by"`
 	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
 	Child  []InventoryLibraryModel `gorm:"foreignKey:ParentID;references:ID;constraint:OnDelete:CASCADE" json:"child"`
 }
