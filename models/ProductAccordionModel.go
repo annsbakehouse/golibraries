@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 	"time"
 	"gorm.io/plugin/soft_delete"
+	"fmt"
 )
 
 type ProductAccordionModel struct {
@@ -27,6 +28,7 @@ type ProductAccordionModelPreload struct {
 	Active	 		int				`gorm:"column:active" json:"active"`
 	Inc	 			int				`gorm:"column:inc" json:"inc"`
 	Language	  	[]LanguageTableModelPreload 	`gorm:"foreignKey:TableTargetID;references:ID" json:"language"`
+	DeletedAt 		soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 
 
@@ -49,11 +51,10 @@ func (p *ProductAccordionModel) BeforeUpdate(tx *gorm.DB) (err error) {
 func (p *ProductAccordionModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *ProductAccordionModel) AfterDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
+func (p *ProductAccordionModel) BeforeDelete(tx *gorm.DB) (err error) {
 	var model ProductAccordionModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	fmt.Println(p.ID)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

@@ -20,6 +20,7 @@ type ProductLibraryCategoryModel struct {
 type ProductLibraryCategoryModelPreload struct {
 	ID           	string     `gorm:"column:id;primary_key" json:"id"`
 	Name         	NullString     `gorm:"column:name;default:null" json:"name"`
+	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 
 
@@ -44,9 +45,8 @@ func (p *ProductLibraryCategoryModel) AfterUpdate(tx *gorm.DB) (err error) {
 }
 func (p *ProductLibraryCategoryModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model ProductLibraryCategoryModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

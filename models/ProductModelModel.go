@@ -26,6 +26,7 @@ type ProductModelModelPreload struct {
 	ProductTypeId	NullString		`gorm:"column:product_type_id" json:"product_type_id"`
 	Active	 	int		`gorm:"column:active" json:"active"`
 	ProductType  ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
+	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 
 
@@ -49,10 +50,8 @@ func (p *ProductModelModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *ProductModelModel) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model ProductModelModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

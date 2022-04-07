@@ -42,13 +42,31 @@ func ExtractTokenID(c *gin.Context) (map[string]interface{}, error) {
 
 //token validation
 func TokenValid(c *gin.Context) {
+	// pc, _, _, ok := runtime.Caller(1)
+    // details := runtime.FuncForPC(pc)
+    // if ok && details != nil {
+    //     fmt.Printf("called from %s\n", details.Name())
+    // }
 	tokenString := ExtractToken(c)
 	_, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status":  http.StatusUnauthorized,
+				"message": fmt.Errorf("Unexpected signing method: %v", token.Header["alg"]),
+				"error":true,
+			})
+			c.Abort()
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		_,dbReader,err := models.DbConnect()
+		db,dbReader,err := models.DbConnect()
+		defer db.Close()
 		if err!=nil {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status":  http.StatusUnauthorized,
+				"message": "Signing Token Expired",
+				"error":true,
+			})
+			c.Abort()
 			return nil, fmt.Errorf("Signing Token Expired")
 		}
 		tt := time.Now()

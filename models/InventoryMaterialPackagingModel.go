@@ -57,9 +57,8 @@ func (p *InventoryMaterialPackagingModel) AfterUpdate(tx *gorm.DB) (err error) {
 }
 func (p *InventoryMaterialPackagingModel	) BeforeDelete(tx *gorm.DB) (err error) {
 	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model InventoryMaterialPackagingModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

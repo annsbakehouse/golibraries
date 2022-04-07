@@ -4,12 +4,14 @@ import (
 	"gorm.io/gorm"
 	"time"
 	"gorm.io/plugin/soft_delete"
+	"fmt"
 )
 
-type ProductImageUsageModel struct {
+type ProductContentParameterTitleModel struct {
 	ID           	string     		`gorm:"column:id;primary_key" json:"id"`
 	Name         	NullString     	`gorm:"column:name;default:null" json:"name"`
-	PUID			string			`gorm:"column:piuid;unique" json:"piuid"`
+	ContentType		int		`gorm:"column:content_type" json:"content_type"`
+	Inc	 			int				`gorm:"column:inc" json:"inc"`
 	CreatedBy    	NullString  	`gorm:"column:created_by" json:"created_by"`
 	CreatedAt    	time.Time 		`gorm:"column:created_at" json:"crated_at"`
 	UpdatedBy    	NullString 		`gorm:"column:updated_by" json:"updated_by"`
@@ -18,53 +20,49 @@ type ProductImageUsageModel struct {
 	DeletedAt 		soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
 }
 
-type ProductImageUsageModelPreload struct {
+type ProductContentParameterTitleModelPreload struct {
 	ID           	string     		`gorm:"column:id;primary_key" json:"id"`
 	Name         	NullString     	`gorm:"column:name;default:null" json:"name"`
-	PUID			string			`gorm:"column:piuid" json:"piuid"`
+	ContentType		int		`gorm:"column:content_type" json:"content_type"`
 	DeletedAt 		soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 
 
-var DeletedMode bool
+
 // TableName sets the insert table name for this struct type
-func (p *ProductImageUsageModel) TableName() string {
-	return "product_image_usage"
+func (p *ProductContentParameterTitleModel) TableName() string {
+	return "product_content_title"
 }
-func (p *ProductImageUsageModelPreload) TableName() string {
-	return "product_image_usage"
-}
-
-func (p *ProductImageUsageModel) BeforeCreate(tx *gorm.DB) (err error) {
-	return
+func (p *ProductContentParameterTitleModelPreload) TableName() string {
+	return "product_content_title"
 }
 
-func (p *ProductImageUsageModel) BeforeUpdate(tx *gorm.DB) (err error) {
+func (p *ProductContentParameterTitleModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *ProductImageUsageModel) AfterUpdate(tx *gorm.DB) (err error) {
+
+func (p *ProductContentParameterTitleModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
-func (p *ProductImageUsageModel) BeforeDelete(tx *gorm.DB) (err error) {
-	var model ProductImageUsageModel
+func (p *ProductContentParameterTitleModel) AfterUpdate(tx *gorm.DB) (err error) {
+	return
+}
+func (p *ProductContentParameterTitleModel) BeforeDelete(tx *gorm.DB) (err error) {
+	fmt.Println(p.ID)
+	var model ProductContentParameterTitleModel
 	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
-	return 
-}
-func (p *ProductImageUsageModel) AfterDelete(tx *gorm.DB) (err error) {
-	
 	return
 }
 
 //strcture input
-type ProductImageUsageModelInput struct {
+type ProductContentParameterTitleModelInput struct {
 	Name         	string     `json:"name" binding:"required"`
-	PUID			string		`json:"puid" binding:"required"`
+	OrderSequence	int64		`json:"order_sequence"`
 }
-type ProductImageUsageModelUpdate struct {
+type ProductContentParameterTitleModelUpdate struct {
 	ID				string		`json:"id" binding:"required"`
 	Name         	string     `json:"name" binding:"required"`
-	PUID			string		`json:"puid"`
 }
-type ProductImageUsageModelInfo struct {
+type ProductContentParameterTitleModelInfo struct {
 	ID	string	`json:"id" binding:"required"`
 }

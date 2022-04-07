@@ -50,10 +50,8 @@ func (p *ProductLibraryPropertyModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *ProductLibraryPropertyModel) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model ProductLibraryPropertyModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

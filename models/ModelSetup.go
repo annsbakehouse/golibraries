@@ -20,28 +20,32 @@ import (
 )
 var ActiveUser string
 var DbConnection *gorm.DB
-func Connection() (*gorm.DB,error){
+// func Connection() (*gorm.DB,error){
+	
+// 	return dbMaster,nil
+// }
+func DbConnect() (*sql.DB,*gorm.DB,error) {
+	//mysql connection
 	configDbMaster := os.Getenv("masterDsn");
-	dbMaster, err := gorm.Open(postgres.Open(configDbMaster),&gorm.Config{
+	sqlDB, err := sql.Open("pgx", configDbMaster)
+	dbMaster, err := gorm.Open(postgres.New(postgres.Config{
+		Conn: sqlDB,
+		PreferSimpleProtocol:true,
+	  }),&gorm.Config{
 		Logger:logger.Default.LogMode(logger.Info),
 		QueryFields: true,
 	})
 	if err != nil {
-		return nil,fmt.Errorf("Master Database Connection Error")
+		return nil,nil,fmt.Errorf("Master Database Connection Error")
 	}
-	return dbMaster,nil
-}
-func DbConnect() (*gorm.DB,*gorm.DB,error) {
-	//mysql connection
-	// configDbMaster := os.Getenv("masterDsn");
-	// dbMaster, err := gorm.Open(postgres.Open(configDbMaster),&gorm.Config{
-	// 	Logger:logger.Default.LogMode(logger.Info),
-	// 	QueryFields: true,
-	// })
-	// if err != nil {
-	// 	return nil,nil,fmt.Errorf("Master Database Connection Error")
-	// }
-	dbMaster := DbConnection
+	sqlDB.SetMaxIdleConns(10)
+	// SetMaxOpenConns sets the maximum number of open connections to the database.
+	sqlDB.SetMaxOpenConns(10)
+	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
+	sqlDB.SetConnMaxLifetime(2*time.Minute)
+	fmt.Println(sqlDB.Stats())
+	return sqlDB,dbMaster,nil
+	//dbMaster := DbConnection
 	//dbMaster := dbConnection
 	//end mysql connection
 
@@ -68,7 +72,7 @@ func DbConnect() (*gorm.DB,*gorm.DB,error) {
 	// 	log.Panic(err)
 	// }
 	//end arango connections
-	return dbMaster,dbMaster,nil
+	//return dbMaster,dbMaster,nil
 }
 
 //json encode

@@ -50,10 +50,8 @@ func (p *ProductPlatformModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *ProductPlatformModel) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model ProductPlatformModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

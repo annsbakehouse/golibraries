@@ -62,10 +62,8 @@ func (p *ProductModelDataModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *ProductModelDataModel) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println("Before Delete")
-	_,con,_ := DbConnect()
 	var model ProductModelDataModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 

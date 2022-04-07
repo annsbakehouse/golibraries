@@ -66,10 +66,9 @@ func (p *InventoryLibraryModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *InventoryLibraryModel) BeforeDelete(tx *gorm.DB) (err error) {
-	_,con,_ := DbConnect()
 	var model InventoryLibraryModel
-	con.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
-	con.Model(&model).Where("parent_id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
+	tx.Model(&model).Where("parent_id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }
 func (p *InventoryLibraryModel) AfterDelete(tx *gorm.DB) (err error) {
