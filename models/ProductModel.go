@@ -30,6 +30,7 @@ type ProductModelPreload struct {
 	ProductType  	ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
 	DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 	ModelData	[]ProductModelDataPreload `gorm:"foreignKey:ProductId;references:ID" json:"model_data"`
+	ProductImage []ProductImageModelPreload `gorm:"foreignKey:ProductID;references:ID" json:"product_image"`
 }
 
 // TableName sets the insert table name for this struct type
@@ -51,7 +52,7 @@ func (p *ProductModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 func (p *ProductModel) BeforeDelete(tx *gorm.DB) (err error) {
-	var model InventoryMaterialPackagingModel
+	var model ProductModel
 	tx.Model(&model).Where("id=?", p.ID).Update("deleted_by",ActiveUser)
 	return
 }

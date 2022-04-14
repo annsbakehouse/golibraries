@@ -26,7 +26,6 @@ type ProductImageUsageModelPreload struct {
 }
 
 
-var DeletedMode bool
 // TableName sets the insert table name for this struct type
 func (p *ProductImageUsageModel) TableName() string {
 	return "product_image_usage"
