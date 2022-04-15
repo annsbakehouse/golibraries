@@ -40,6 +40,7 @@ type ProductModelDataPreload struct {
 	ModelData	ProductModelModelPreload `gorm:"foreignKey:ID;references:ProductModelId" json:"model_data"`
 	PlatformData []ProductPlatformModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"platform"`
 	Pricing []ProductPricingModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"pricing"`
+	ProductModelImage []ProductModelImageModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_image"`
 }
 
 
