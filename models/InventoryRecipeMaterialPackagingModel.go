@@ -17,7 +17,7 @@ type InventoryRecipeMaterialPackagingModelPreload struct {
 	InventoryMaterialPackagingId     		string	`gorm:"column:inventory_material_packaging_id;default:null" json:"inventory_material_packaging_id"`
 	InventoryRecipeId    NullString	`gorm:"column:inventory_recipe_id;default:null" json:"inventory_recipe_id"`
 	Inc				int `gorm:"column:inc;default:null" json:"inc"`
-	MaterialPackaging	InventoryMaterialPackagingPreloadModel `gorm:"foreignKey:ID;references:InventoryMaterialPackagingId"`
+	MaterialPackaging	InventoryMaterialPackagingPreloadModel `gorm:"foreignKey:ID;references:InventoryMaterialPackagingId" json:"material_packaging"`
 }
 
 // TableName sets the insert table name for this struct type
