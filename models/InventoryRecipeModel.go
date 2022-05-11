@@ -44,6 +44,7 @@ type InventoryRecipeModelPreload struct {
 	RecipeIng		[]InventoryRecipeIngredientModelPreload `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"recipe_ingredient"`
 	RecipeLibrary	[]InventoryRecipeLibraryModelPreload `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"recipe_library"`
 	RecipeMaterialPackaging	[]InventoryRecipeMaterialPackagingModelPreload `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"recipe_material_packaging"`
+	Unit			InventoryUnitModelPreload `gorm:"foreignKey:ID;references:UnitId" json:"unit"`
 }
 
 // TableName sets the insert table name for this struct type

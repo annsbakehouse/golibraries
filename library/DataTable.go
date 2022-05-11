@@ -84,7 +84,11 @@ func DataTable(Config DataTableConfig) (interface{}, error) {
 
 	//end building order
 	total:=0
-	dbReader.Raw("SELECT COUNT("+Config.Primary+") FROM "+Config.Table+" "+whereDefault+" "+defaultGroup).Scan(&total)
+	readCount := dbReader.Raw("SELECT COUNT("+Config.Primary+") FROM "+Config.Table+" "+whereDefault+" "+defaultGroup).Scan(&total)
+	if readCount.RowsAffected>1 {
+		dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT("+Config.Primary+") as total FROM "+Config.Table+" "+whereDefault+" "+defaultGroup+") as a").Scan(&total)
+	}
+	 
 	
 	//limit builder
 	queryBuilder = queryBuilder + DTGeneratorLimit(Config.Request)
