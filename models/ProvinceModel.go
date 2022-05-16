@@ -1,8 +1,9 @@
 package models
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type ProvinceModel struct {
@@ -12,13 +13,23 @@ type ProvinceModel struct {
 	Active       uint64     `gorm:"column:active;default:1" json:"active"`
 	CountryId    string     `gorm:"column:country_id;default:null" json:"countryid"`
 	CreatedBy    NullString `gorm:"column:created_by" json:"created_by"`
-	CreatedAt    time.Time `gorm:"column:created_at" json:"created_at"`
+	CreatedAt    time.Time  `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy    NullString `gorm:"column:updated_by" json:"updated_by"`
-	UpdatedAt    time.Time `gorm:"column:updated_at" json:"updated_at"`
+	UpdatedAt    time.Time  `gorm:"column:updated_at" json:"updated_at"`
+}
+type ProvinceModelPreload struct {
+	ID           string `gorm:"column:id;primary_key" json:"id"`
+	Name         string `gorm:"column:name;default:null" json:"name"`
+	ProvinceCode string `gorm:"column:province_code;default:null" json:"provincecode"`
+	Active       uint64 `gorm:"column:active;default:1" json:"active"`
+	CountryId    string `gorm:"column:country_id;default:null" json:"countryid"`
 }
 
 // TableName sets the insert table name for this struct type
 func (p *ProvinceModel) TableName() string {
+	return "province"
+}
+func (p *ProvinceModelPreload) TableName() string {
 	return "province"
 }
 

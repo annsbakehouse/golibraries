@@ -16,9 +16,9 @@ type CountryModel struct {
 	Active         uint64     `gorm:"column:active;default:1" json:"active"`
 	EnableContent  uint64     `gorm:"column:enable_content;default:0" json:"enablecontent"`
 	CreatedBy      NullString `gorm:"column:created_by" json:"created_by"`
-	CreatedAt      time.Time `gorm:"column:created_at" json:"created_at"`
+	CreatedAt      time.Time  `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy      NullString `gorm:"column:updated_by" json:"updated_by"`
-	UpdatedAt      time.Time `gorm:"column:updated_at" json:"updated_at"`
+	UpdatedAt      time.Time  `gorm:"column:updated_at" json:"updated_at"`
 	DefaultCountry uint64     `gorm:"column:default_country;default:0" json:"defaultcountry"`
 	// DeletedBy NullString `gorm:"column:deleted_by" json:"deleted_by"`
 	// DeletedAt NullString `gorm:"column:deleted_at" json:"deleted_at"`
