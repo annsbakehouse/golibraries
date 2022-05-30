@@ -57,6 +57,21 @@ func (c *CountryModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
 
+func (c *CountryModel) AfterUpdate(tx *gorm.DB) (err error) {
+
+	if len(c.ID) > 0 {
+		var model CustomerRetailModel
+		var country CountryModel
+		res := tx.Model(&country).Where("id=?", c.ID).First(&country)
+		if res.RowsAffected == 1 {
+			tx.Model(&model).Where("phone_1_country_id=?", country.ID).Update("phone_1_country_code", country.CountryCode)
+			tx.Model(&model).Where("phone_2_country_id=?", country.ID).Update("phone_2_country_code", country.CountryCode)
+			tx.Model(&model).Where("phone_2_country_id=?", country.ID).Update("phone_2_country_code", country.CountryCode)
+		}
+	}
+	return
+}
+
 func (c *CountryModel) FindAllCountries(tx *gorm.DB) (*[]CountryModel, error) {
 	var err error
 	countries := []CountryModel{}

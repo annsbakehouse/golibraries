@@ -1,10 +1,12 @@
 package library
 
 import (
-	"github.com/gin-gonic/gin"
 	"encoding/base64"
 	"errors"
 	"strings"
+	"time"
+
+	"github.com/gin-gonic/gin"
 
 	"bytes"
 	"encoding/json"
@@ -106,14 +108,19 @@ func JsonDecode(data string) (map[string]interface{}, error) {
 	return dat, nil
 }
 
-//parse json requst Body 
+//parse json requst Body
 func JsonReqBody(c *gin.Context) (map[string]interface{}, error) {
 	body := c.Request.Body
 	value, err := ioutil.ReadAll(body)
 	if err != nil {
-		return nil,err	
+		return nil, err
 	}
 	var dat map[string]interface{}
 	json.Unmarshal([]byte(value), &dat)
-	return dat,nil
+	return dat, nil
+}
+
+func IsDateValue(stringDate string) bool {
+	_, err := time.Parse("2006-01-02", stringDate)
+	return err == nil
 }
