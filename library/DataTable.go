@@ -82,7 +82,6 @@ func DataTable(Config DataTableConfig) (interface{}, error) {
 		}
 	}
 	queryBuilder = queryBuilder + orderDefault + dtOrder
-
 	//end building order
 	total := 0
 	readCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.Table + " " + whereDefault + " " + defaultGroup).Scan(&total)

@@ -124,3 +124,7 @@ func IsDateValue(stringDate string) bool {
 	_, err := time.Parse("2006-01-02", stringDate)
 	return err == nil
 }
+func IsDateTimeValue(stringDate string) bool {
+	_, err := time.Parse("2006-01-02 15:04:05", stringDate)
+	return err == nil
+}
