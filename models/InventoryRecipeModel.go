@@ -86,8 +86,8 @@ type InventoryRecipeInput struct {
 	Image        string `json:"image"`
 
 	//recipe ing
-	RecipeID []string `json:"recipe"`
-	Amount   []int    `json:"amount"`
+	RecipeID []string  `json:"recipe"`
+	Amount   []float32 `json:"amount"`
 
 	//library
 	InventoryLibraryItem         []string `json:"inventory_library_item"`
@@ -111,8 +111,8 @@ type InventoryRecipeUpdate struct {
 	Image        string `json:"image"`
 
 	//recipe ing
-	RecipeID []string `json:"recipe"`
-	Amount   []int    `json:"amount"`
+	RecipeID []string  `json:"recipe"`
+	Amount   []float32 `json:"amount"`
 
 	//library
 	InventoryLibraryItem         []string `json:"inventory_library_item"`

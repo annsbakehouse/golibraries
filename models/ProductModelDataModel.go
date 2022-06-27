@@ -89,6 +89,7 @@ type ProductModelDataModelUpdate struct {
 	MOQ               int      `json:"moq"`
 	MOQINC            int      `json:"moq_inc"`
 	Platform          []string `json:"platform"`
+	Mid               string   `json:"mid"`
 }
 type ProductModelDataModelInfo struct {
 	ID string `json:"id" binding:"required"`

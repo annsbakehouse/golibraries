@@ -8,7 +8,7 @@ type InventoryRecipeIngredientModel struct {
 	ID                string                      `gorm:"column:id;primary_key" json:"id"`
 	InventoryRecipeId string                      `gorm:"column:inventory_recipe_id;default:null" json:"inventory_recipe_id"`
 	RecipeId          string                      `gorm:"column:recipe_id;default:null" json:"recipe_id"`
-	Amount            int                         `gorm:"column:amount;default:null" json:"amount"`
+	Amount            float32                     `gorm:"column:amount;default:null" json:"amount"`
 	Inc               int                         `gorm:"column:inc;default:null" json:"inc"`
 	Recipe            InventoryRecipeModelPreload `gorm:"foreignKey:ID;references:RecipeId"`
 }
@@ -17,7 +17,7 @@ type InventoryRecipeIngredientModelPreload struct {
 	ID                string                      `gorm:"column:id;primary_key" json:"id"`
 	InventoryRecipeId string                      `gorm:"column:inventory_recipe_id;default:null" json:"inventory_recipe_id"`
 	RecipeId          string                      `gorm:"column:recipe_id;default:null" json:"recipe_id"`
-	Amount            int                         `gorm:"column:amount;default:null" json:"amount"`
+	Amount            float32                     `gorm:"column:amount;default:null" json:"amount"`
 	Inc               int                         `gorm:"column:inc;default:null" json:"inc"`
 	Recipe            InventoryRecipeModelPreload `gorm:"foreignKey:ID;references:RecipeId"`
 }

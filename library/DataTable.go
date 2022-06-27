@@ -153,7 +153,7 @@ func DTGenerateWhere(col []map[string]interface{}, req map[string]interface{}) s
 					if search["searchable"].(bool) {
 						colName = fmt.Sprintf("%v", v["col"])
 						if fmt.Sprintf("%v", v["type"]) == "number" {
-							colName = "CAST(" + fmt.Sprintf("%v", v["name"]) + " as TEXT)"
+							colName = "CAST(" + colName + " as TEXT)"
 						}
 						if len(whereOuput) == 0 {
 							whereOuput = colName + " ILIKE '%" + searchValue + "%'"

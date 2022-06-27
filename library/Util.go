@@ -3,6 +3,7 @@ package library
 import (
 	"encoding/base64"
 	"errors"
+	"os"
 	"strings"
 	"time"
 
@@ -49,6 +50,35 @@ func SaveImageToDisk(fileNameBase, data string) (string, error) {
 	ioutil.WriteFile(fileName, buff.Bytes(), 0644)
 
 	return fileName, err
+}
+
+func SaveFileToDisk(fileNameBase string, data string) (string, error) {
+	reader := base64.NewDecoder(base64.StdEncoding, strings.NewReader(data))
+	buff := bytes.Buffer{}
+	_, err := buff.ReadFrom(reader)
+	if err != nil {
+		return "", err
+	}
+
+	fileName := fileNameBase
+	ioutil.WriteFile(fileName, buff.Bytes(), 0644)
+
+	return fileName, err
+}
+func IsJSON(s string) bool {
+	var js interface{}
+	return json.Unmarshal([]byte(s), &js) == nil
+}
+
+func FileExists(name string) (bool, error) {
+	_, err := os.Stat(name)
+	if err == nil {
+		return true, nil
+	}
+	if errors.Is(err, os.ErrNotExist) {
+		return false, nil
+	}
+	return false, err
 }
 
 func GenUID(sequence int, lengthNumber int, charMinLenght int) string {
@@ -127,4 +157,49 @@ func IsDateValue(stringDate string) bool {
 func IsDateTimeValue(stringDate string) bool {
 	_, err := time.Parse("2006-01-02 15:04:05", stringDate)
 	return err == nil
+}
+func IsTimeValue(stringDate string) bool {
+	_, err := time.Parse("15:04:05", stringDate)
+	return err == nil
+}
+func NumberFormat(number float64, decimals uint, decPoint, thousandsSep string) string {
+	neg := false
+	if number < 0 {
+		number = -number
+		neg = true
+	}
+	dec := int(decimals)
+	// Will round off
+	str := fmt.Sprintf("%."+strconv.Itoa(dec)+"F", number)
+	prefix, suffix := "", ""
+	if dec > 0 {
+		prefix = str[:len(str)-(dec+1)]
+		suffix = str[len(str)-dec:]
+	} else {
+		prefix = str
+	}
+	sep := []byte(thousandsSep)
+	n, l1, l2 := 0, len(prefix), len(sep)
+	// thousands sep num
+	c := (l1 - 1) / 3
+	tmp := make([]byte, l2*c+l1)
+	pos := len(tmp) - 1
+	for i := l1 - 1; i >= 0; i, n, pos = i-1, n+1, pos-1 {
+		if l2 > 0 && n > 0 && n%3 == 0 {
+			for j := range sep {
+				tmp[pos] = sep[l2-j-1]
+				pos--
+			}
+		}
+		tmp[pos] = prefix[i]
+	}
+	s := string(tmp)
+	if dec > 0 {
+		s += decPoint + suffix
+	}
+	if neg {
+		s = "-" + s
+	}
+
+	return s
 }

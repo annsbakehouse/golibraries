@@ -11,7 +11,7 @@ type ProductAccordionModel struct {
 	Name          NullString `gorm:"column:name;default:null" json:"name"`
 	OrderSequence NullInt64  `gorm:"column:order_sequence" json:"order_sequence"`
 	Active        int        `gorm:"column:active" json:"active"`
-	Inc           int        `gorm:"column:inc" json:"inc"`
+	Inc           NullInt64  `gorm:"->;column:inc" json:"inc"`
 	CreatedBy     NullString `gorm:"column:created_by" json:"created_by"`
 	CreatedAt     time.Time  `gorm:"column:created_at" json:"crated_at"`
 	UpdatedBy     NullString `gorm:"column:updated_by" json:"updated_by"`

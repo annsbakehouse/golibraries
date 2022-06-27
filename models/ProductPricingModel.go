@@ -29,7 +29,7 @@ type ProductPricingModelPreload struct {
 	INC                int    `gorm:"column:inc" json:"inc"`
 	Price              int    `gorm:"column:price" json:"price"`
 	// DeletedAt          soft_delete.DeletedAt    `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
-	CustomerLevel []CustomerLevelModelInfo `gorm:"foreignKey:ID;references:CustomerLevelID" json:"customer_level"`
+	CustomerLevel CustomerLevelModelInfo `gorm:"foreignKey:ID;references:CustomerLevelID" json:"customer_level"`
 }
 
 // TableName sets the insert table name for this struct type

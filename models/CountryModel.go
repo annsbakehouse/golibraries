@@ -10,12 +10,13 @@ type CountryModel struct {
 	ID             string     `gorm:"column:id;primary_key" json:"id"`
 	Name           string     `gorm:"column:name;default:null" json:"name"`
 	Description    string     `gorm:"column:description;default:null" json:"description"`
-	TwoCodeLetter  string     `gorm:"column:two_code_letter;default:null" json:"twocodeletter"`
+	TwoCodeLetter  string     `gorm:"column:two_code_letter;default:null" json:"two_code_letter"`
 	CountryCode    string     `gorm:"column:country_code;default:null" json:"countrycode"`
 	Flag           NullString `gorm:"column:flag;default:null" json:"flag"`
 	Active         uint64     `gorm:"column:active;default:1" json:"active"`
 	EnableContent  uint64     `gorm:"column:enable_content;default:0" json:"enablecontent"`
-	LanguageName   NullString `gorm:"column:language_name;default:null" json:"language_name"`
+	LanguageName   NullString `gorm:"column:language_name" json:"language_name"`
+	LanguageCode   NullString `gorm:"column:language_code" json:"language_code"`
 	CreatedBy      NullString `gorm:"column:created_by" json:"created_by"`
 	CreatedAt      time.Time  `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy      NullString `gorm:"column:updated_by" json:"updated_by"`
@@ -29,13 +30,14 @@ type CountryModelPreload struct {
 	ID             string     `gorm:"column:id;primary_key" json:"id"`
 	Name           string     `gorm:"column:name;default:null" json:"name"`
 	Description    string     `gorm:"column:description;default:null" json:"description"`
-	TwoCodeLetter  string     `gorm:"column:two_code_letter;default:null" json:"twocodeletter"`
+	TwoCodeLetter  string     `gorm:"column:two_code_letter;default:null" json:"two_code_letter"`
 	CountryCode    string     `gorm:"column:country_code;default:null" json:"countrycode"`
 	Flag           NullString `gorm:"column:flag;default:null" json:"flag"`
 	Active         uint64     `gorm:"column:active;default:1" json:"active"`
 	EnableContent  uint64     `gorm:"column:enable_content;default:0" json:"enablecontent"`
 	DefaultCountry uint64     `gorm:"column:default_country;default:0" json:"defaultcountry"`
 	LanguageName   NullString `gorm:"column:language_name;default:null" json:"language_name"`
+	LanguageCode   NullString `gorm:"column:language_code" json:"language_code"`
 	// DeletedBy NullString `gorm:"column:deleted_by" json:"deleted_by"`
 	// DeletedAt NullString `gorm:"column:deleted_at" json:"deleted_at"`
 }
