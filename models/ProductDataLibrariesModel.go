@@ -23,15 +23,18 @@ type ProductDataLibrariesModel struct {
 }
 
 type ProductDataLibrariesModelPreload struct {
-	ID                         string     `gorm:"column:id;primary_key" json:"id"`
-	ProductLibraryPropertiesID NullString `gorm:"column:product_library_properties_id" json:"product_library_properties_id"`
-	CustomerLevelID            NullString `gorm:"column:customer_level_id" json:"customer_level_id"`
-	ProductModelDataID         NullString `gorm:"column:product_model_data_id" json:"product_model_data_id"`
-	ProductID                  NullString `gorm:"column:product_id" json:"product_id"`
-	IsRequired                 int        `gorm:"column:is_required" json:"is_required"`
-	LinkTo                     NullInt64  `gorm:"column:link_to" json:"link_to"`
-	ProductLibraryID           NullString `gorm:"column:product_library_id" json:"product_library_id"`
-	ProductModelID             NullString `gorm:"column:product_model_id" json:"product_model_id"`
+	ID                           string                             `gorm:"column:id;primary_key" json:"id"`
+	ProductLibraryPropertiesID   NullString                         `gorm:"column:product_library_properties_id" json:"product_library_properties_id"`
+	CustomerLevelID              NullString                         `gorm:"column:customer_level_id" json:"customer_level_id"`
+	ProductModelDataID           NullString                         `gorm:"column:product_model_data_id" json:"product_model_data_id"`
+	ProductID                    NullString                         `gorm:"column:product_id" json:"product_id"`
+	IsRequired                   int                                `gorm:"column:is_required" json:"is_required"`
+	LinkTo                       int                                `gorm:"column:link_to" json:"link_to"`
+	ProductLibraryID             NullString                         `gorm:"column:product_library_id" json:"product_library_id"`
+	ProductModelID               NullString                         `gorm:"column:product_model_id" json:"product_model_id"`
+	ProductLibraryPropertiesInfo ProductLibraryPropertyModelPreload `gorm:"foreignKey:ProductLibraryPropertiesID;references:ID" json:"product_model_library_properties"`
+	ProductModelInfo             ProductModelModelPreload           `gorm:"foreignKey:ProductModelID;references:ID" json:"product_model_info"`
+	ProductInfo                  ProductModelPreload                `gorm:"foreignKey:ProductID;references:ID" json:"product_info"`
 }
 
 // TableName sets the insert table name for this struct type

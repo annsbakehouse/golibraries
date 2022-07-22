@@ -29,8 +29,12 @@ type ProductModelPreload struct {
 	Active        int              `gorm:"column:active" json:"active"`
 	ProductType   ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
 	// DeletedAt     soft_delete.DeletedAt      `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
-	ModelData    []ProductModelDataPreload  `gorm:"foreignKey:ProductId;references:ID" json:"model_data"`
-	ProductImage []ProductImageModelPreload `gorm:"foreignKey:ProductID;references:ID" json:"product_image"`
+	ModelData                  []ProductModelDataPreload            `gorm:"foreignKey:ProductId;references:ID" json:"model_data"`
+	ProductImage               []ProductImageModelPreload           `gorm:"foreignKey:ProductID;references:ID" json:"product_image"`
+	ProductPlarformDisplay     []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductID;references:ID" json:"product_platform"`
+	ProductDisplayName         []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"product_display_name"`
+	ContentDisplay             []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"content_display"`
+	MktProductContentAccordion []MKTProductAccordionModelPreload    `gorm:"foreignKey:ProductID;references:ID" json:"product_content_accordion"`
 }
 
 // TableName sets the insert table name for this struct type
@@ -54,6 +58,18 @@ func (p *ProductModel) AfterUpdate(tx *gorm.DB) (err error) {
 func (p *ProductModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model ProductModel
 	// tx.Model(&model).Where("id=?", p.ID).Update("deleted_by", ActiveUser)
+	return
+}
+func (p *ProductModel) AfterDelete(tx *gorm.DB) (err error) {
+	// var model ProductModel
+	idProduct := p.ID
+	var langModel LanguageTableModel
+	var cat = []string{"description_1", "description_2", "description_3", "description_4", "description_5", "keyword", "meta_title", "meta_description"}
+	tx.Model(&langModel).Where("table_target=?", "product").Where("column_name=?", "product_display_name").Where("table_target_id=?", idProduct).Delete(&langModel)
+	tx.Model(&langModel).Where("table_target=?", "product").Where(map[string]interface{}{"column_name": cat}).Where("table_target_id=?", idProduct).Delete(&langModel)
+	tx.Model(&langModel).Where("table_target=?", "product").Where(map[string]interface{}{"column_name": cat}).Where("table_target_id=?", idProduct).Delete(&langModel)
+	//delete product display name lang
+
 	return
 }
 

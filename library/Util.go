@@ -3,11 +3,13 @@ package library
 import (
 	"encoding/base64"
 	"errors"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"bytes"
 	"encoding/json"
@@ -24,6 +26,11 @@ var (
 	ErrBucket       = errors.New("Invalid bucket!")
 	ErrSize         = errors.New("Invalid size!")
 	ErrInvalidImage = errors.New("Invalid image!")
+)
+var (
+	ErrFileBucket  = errors.New("Invalid bucket!")
+	ErrFileSize    = errors.New("Invalid size!")
+	ErrInvalidFile = errors.New("Invalid File!")
 )
 
 func SaveImageToDisk(fileNameBase, data string) (string, error) {
@@ -53,7 +60,11 @@ func SaveImageToDisk(fileNameBase, data string) (string, error) {
 }
 
 func SaveFileToDisk(fileNameBase string, data string) (string, error) {
-	reader := base64.NewDecoder(base64.StdEncoding, strings.NewReader(data))
+	idx := strings.Index(data, ";base64,")
+	if idx < 0 {
+		return "", ErrInvalidFile
+	}
+	reader := base64.NewDecoder(base64.StdEncoding, strings.NewReader(data[idx+8:]))
 	buff := bytes.Buffer{}
 	_, err := buff.ReadFrom(reader)
 	if err != nil {
@@ -202,4 +213,32 @@ func NumberFormat(number float64, decimals uint, decPoint, thousandsSep string) 
 	}
 
 	return s
+}
+
+func RandStringFromDb(n int, db *gorm.DB, table string, cols string) string {
+
+	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	const (
+		letterIdxBits = 6                    // 6 bits to represent a letter index
+		letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+	)
+	b := make([]byte, n)
+	for i := 0; i < n; {
+		if idx := int(rand.Int63() & letterIdxMask); idx < len(letterBytes) {
+			b[i] = letterBytes[idx]
+			i++
+		}
+	}
+	result := map[string]interface{}{}
+	rs := db.Table(table).Select(cols).Where(cols+"=?", string(b)).First(result)
+	if rs.RowsAffected == 0 {
+		return string(b)
+	}
+	return RandStringFromDb(n, db, table, cols)
+}
+
+func GetBreadCrumb(mode int, url string, db *gorm.DB) {
+	//code
+	//0 product
+
 }

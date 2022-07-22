@@ -17,10 +17,10 @@ type ProductLibraryPropertyModel struct {
 }
 
 type ProductLibraryPropertyModelPreload struct {
-	ID                     string                  `gorm:"column:id;primary_key" json:"id"`
-	Name                   NullString              `gorm:"column:name;default:null" json:"name"`
-	ProductLibraryID       string                  `gorm:"column:product_library_id" json:"product_library_id"`
-	ProductLibraryNameInfo ProductLibraryNameModel `gorm:"foreignKey:ID;references:ProductLibraryID" json:"product_library_name_info"`
+	ID                     string                         `gorm:"column:id;primary_key" json:"id"`
+	Name                   NullString                     `gorm:"column:name;default:null" json:"name"`
+	ProductLibraryID       string                         `gorm:"column:product_library_id" json:"product_library_id"`
+	ProductLibraryNameInfo ProductLibraryNameModelPreload `gorm:"foreignKey:ID;references:ProductLibraryID" json:"product_library_name_info"`
 	// DeletedAt soft_delete.DeletedAt `gorm:"column:deleted_at" json:"-"`
 }
 

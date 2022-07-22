@@ -56,12 +56,12 @@ func (p *ProductImageUsageModel) AfterDelete(tx *gorm.DB) (err error) {
 //strcture input
 type ProductImageUsageModelInput struct {
 	Name string `json:"name" binding:"required"`
-	PUID string `json:"puid" binding:"required"`
+	PUID string `json:"piuid" binding:"required"`
 }
 type ProductImageUsageModelUpdate struct {
 	ID   string `json:"id" binding:"required"`
 	Name string `json:"name" binding:"required"`
-	PUID string `json:"puid"`
+	PUID string `json:"piuid"`
 }
 type ProductImageUsageModelInfo struct {
 	ID string `json:"id" binding:"required"`

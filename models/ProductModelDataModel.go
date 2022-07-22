@@ -37,14 +37,18 @@ type ProductModelDataPreload struct {
 	Active            int    `gorm:"column:active" json:"active"`
 	INC               int    `gorm:"column:inc" json:"inc"`
 	// DeletedAt              soft_delete.DeletedAt               `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
-	ModelData              ProductModelModelPreload            `gorm:"foreignKey:ID;references:ProductModelId" json:"model_data"`
-	PlatformData           []ProductPlatformModelPreload       `gorm:"foreignKey:ProductModelDataID;references:ID" json:"platform"`
-	Pricing                []ProductPricingModelPreload        `gorm:"foreignKey:ProductModelDataID;references:ID" json:"pricing"`
-	ProductModelImage      []ProductModelImageModelPreload     `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_image"`
-	InventoryRecipeInfo    InventoryRecipeModelPreload         `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"inventory_recipe_info"`
-	DeliveryInfo           ProductModelDeliveryPreload         `gorm:"foreignKey:ProductModelDataID;references:ID" json:"delivery_info"`
-	ModelWarehouseInfoW4W2 []ProductModelWarehouseModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w4w2"`
-	ModelWarehouseInfoW3W2 []ProductModelWarehouseModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w3w2"`
+	ModelData                       ProductModelModelPreload             `gorm:"foreignKey:ID;references:ProductModelId" json:"model_data"`
+	PlatformData                    []ProductPlatformModelPreload        `gorm:"foreignKey:ProductModelDataID;references:ID" json:"platform"`
+	Pricing                         []ProductPricingModelPreload         `gorm:"foreignKey:ProductModelDataID;references:ID" json:"pricing"`
+	ProductModelImage               []ProductModelImageModelPreload      `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_image"`
+	InventoryRecipeInfo             InventoryRecipeModelPreload          `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"inventory_recipe_info"`
+	DeliveryInfo                    ProductModelDeliveryPreload          `gorm:"foreignKey:ProductModelDataID;references:ID" json:"delivery_info"`
+	ModelWarehouseInfoW4W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w4w2"`
+	ModelWarehouseInfoW3W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w3w2"`
+	ProductPlarformDisplay          []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_platform"`
+	ContentDisplay                  []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"content_model_display"`
+	MktProductModelContentAccordion []MKTProductAccordionModelPreload    `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_content_accordion"`
+	ProductDataLibrariesinfo        []ProductDataLibrariesModelPreload   `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_library"`
 }
 
 // TableName sets the insert table name for this struct type
@@ -68,6 +72,9 @@ func (p *ProductModelDataModel) AfterUpdate(tx *gorm.DB) (err error) {
 func (p *ProductModelDataModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model ProductModelDataModel
 	// tx.Model(&model).Where("id=?", p.ID).Update("deleted_by", ActiveUser)
+	var langModel LanguageTableModel
+	var cat = []string{"description_1", "description_2", "description_3", "description_4", "description_5", "keyword", "meta_title", "meta_description", "slug"}
+	tx.Model(&langModel).Where("table_target=?", "product_model_data").Where(map[string]interface{}{"column_name": cat}).Where("table_target_id=?", p.ID).Delete(&langModel)
 	return
 }
 

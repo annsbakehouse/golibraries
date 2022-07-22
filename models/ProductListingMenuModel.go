@@ -18,11 +18,12 @@ type ProductListingMenuModel struct {
 }
 
 type ProductListingMenuModelPreload struct {
-	ID                        string                            `gorm:"column:id;primary_key" json:"id"`
-	Name                      NullString                        `gorm:"column:name" json:"name"`
-	Active                    int                               `gorm:"column:active" json:"active"`
-	Ordering                  int                               `gorm:"column:ordering" json:"ordering"`
-	ProductListingMenLanguage []ProductListingMenuLanguageModel `gorm:"foreignKey:ProductListingMenuID;references:ID" json:"product_listing_language"`
+	ID                        string                              `gorm:"column:id;primary_key" json:"id"`
+	Name                      NullString                          `gorm:"column:name" json:"name"`
+	Active                    int                                 `gorm:"column:active" json:"active"`
+	Ordering                  int                                 `gorm:"column:ordering" json:"ordering"`
+	ProductListingMenLanguage []ProductListingMenuLanguageModel   `gorm:"foreignKey:ProductListingMenuID;references:ID" json:"product_listing_language"`
+	ProductSubmenuListing     []ProductListingSubMenuModelPreload `gorm:"foreignKey:ProductListingMenuID;references:ID" json:"product_listing_submenu"`
 }
 
 // TableName sets the insert table name for this struct type

@@ -6,6 +6,7 @@ type ProductListingSubmenuProductModelModel struct {
 	ProductModelID          string `gorm:"column:product_model_id" json:"product_model_id"`
 	ProductModelDataID      string `gorm:"column:product_model_data_id" json:"product_model_data_id"`
 	ProductListingSubmenuID string `gorm:"column:mkt_product_listing_submenu_id" json:"mkt_product_listing_submenu_id"`
+	ProductListingMenuID    string `gorm:"column:mkt_product_listing_menu_id" json:"mkt_product_listing_menu_id"`
 }
 
 type ProductListingSubmenuProductModelModelFrontend struct {
@@ -18,10 +19,12 @@ func (c *ProductListingSubmenuProductModelModel) TableName() string {
 }
 
 type ProductListingSubmenuProductModelModelSave struct {
-	ID         string `json:"id"`
-	Name       string `json:"name" binding:"required"`
-	Slug       string `json:"slug" binding:"required"`
-	Country_Id string `json:"country_id" binding:"required"`
+	INC                     string `json:"inc"`
+	ProductID               string `json:"product_id" binding:"required"`
+	ProductModelID          string `json:"product_model_id" binding:"required"`
+	ProductModelDataID      string `json:"product_model_data_id" binding:"required"`
+	ProductListingSubmenuID string `json:"mkt_product_listing_submenu_id" binding:"required"`
+	ProductListingMenuID    string `json:"mkt_product_listing_menu_id" binding:"required"`
 }
 
 type ProductListingSubmenuProductModelModelInfo struct {

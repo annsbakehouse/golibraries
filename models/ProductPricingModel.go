@@ -22,12 +22,12 @@ type ProductPricingModel struct {
 }
 
 type ProductPricingModelPreload struct {
-	ID                 string `gorm:"column:id;primary_key" json:"id"`
-	CustomerLevelID    string `gorm:"column:customer_level_id" json:"customer_level_id"`
-	ProductModelDataID string `gorm:"column:product_model_data_id" json:"product_model_data_id"`
-	Active             int    `gorm:"column:active" json:"active"`
-	INC                int    `gorm:"column:inc" json:"inc"`
-	Price              int    `gorm:"column:price" json:"price"`
+	ID                 string  `gorm:"column:id;primary_key" json:"id"`
+	CustomerLevelID    string  `gorm:"column:customer_level_id" json:"customer_level_id"`
+	ProductModelDataID string  `gorm:"column:product_model_data_id" json:"product_model_data_id"`
+	Active             int     `gorm:"column:active" json:"active"`
+	INC                int     `gorm:"column:inc" json:"inc"`
+	Price              float64 `gorm:"column:price" json:"price"`
 	// DeletedAt          soft_delete.DeletedAt    `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 	CustomerLevel CustomerLevelModelInfo `gorm:"foreignKey:ID;references:CustomerLevelID" json:"customer_level"`
 }

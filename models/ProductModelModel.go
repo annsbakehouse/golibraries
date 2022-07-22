@@ -21,11 +21,12 @@ type ProductModelModel struct {
 }
 
 type ProductModelModelPreload struct {
-	ID            string           `gorm:"column:id;primary_key" json:"id"`
-	Name          NullString       `gorm:"column:name;default:null" json:"name"`
-	ProductTypeId NullString       `gorm:"column:product_type_id" json:"product_type_id"`
-	Active        int              `gorm:"column:active" json:"active"`
-	ProductType   ProductTypeModel `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
+	ID                     string                               `gorm:"column:id;primary_key" json:"id"`
+	Name                   NullString                           `gorm:"column:name;default:null" json:"name"`
+	ProductTypeId          NullString                           `gorm:"column:product_type_id" json:"product_type_id"`
+	Active                 int                                  `gorm:"column:active" json:"active"`
+	ProductType            ProductTypeModel                     `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
+	ProductPlarformDisplay []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelID;references:ID" json:"product_platform"`
 	// DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 
