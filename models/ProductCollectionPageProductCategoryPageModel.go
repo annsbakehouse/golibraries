@@ -42,9 +42,6 @@ func (p *ProductCollectionPageProductCategoryPageModel) AfterUpdate(tx *gorm.DB)
 	return
 }
 func (p *ProductCollectionPageProductCategoryPageModel) BeforeDelete(tx *gorm.DB) (err error) {
-	// fmt.Println(p.ID)
-	var langModel LanguageTableModel
-	tx.Model(&langModel).Where("table_target=?", "product_filter_tag").Where("column_name=?", "name").Where("table_target_id=?", p.ID).Delete(&langModel)
 	return
 }
 

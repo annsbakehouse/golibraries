@@ -85,3 +85,8 @@ type CustomPageModelDelete struct {
 type CustomPageModelInfo struct {
 	ID string `json:"id" binding:"required"`
 }
+
+type FrontEndCustomPageModelInfo struct {
+	Country_Id string `json:"country_id" binding:"required"`
+	Slug       string `json:"slug" binding:"required"`
+}

@@ -64,10 +64,8 @@ func (p *ProductModel) AfterDelete(tx *gorm.DB) (err error) {
 	// var model ProductModel
 	idProduct := p.ID
 	var langModel LanguageTableModel
-	var cat = []string{"description_1", "description_2", "description_3", "description_4", "description_5", "keyword", "meta_title", "meta_description"}
-	tx.Model(&langModel).Where("table_target=?", "product").Where("column_name=?", "product_display_name").Where("table_target_id=?", idProduct).Delete(&langModel)
-	tx.Model(&langModel).Where("table_target=?", "product").Where(map[string]interface{}{"column_name": cat}).Where("table_target_id=?", idProduct).Delete(&langModel)
-	tx.Model(&langModel).Where("table_target=?", "product").Where(map[string]interface{}{"column_name": cat}).Where("table_target_id=?", idProduct).Delete(&langModel)
+	tx.Model(&langModel).Where("table_target=?", "product").Where("table_target_id=?", idProduct).Delete(&langModel)
+	tx.Model(&langModel).Where("table_target=?", "product_image").Where("table_target_id=?", idProduct).Delete(&langModel)
 	//delete product display name lang
 
 	return

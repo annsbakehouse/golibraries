@@ -53,13 +53,15 @@ func (p *ProductCategoryPageModel) BeforeDelete(tx *gorm.DB) (err error) {
 }
 
 type ProductCategoryLanguage struct {
-	CountryID       string `json:"country_id" binding:"required"`
-	CategoryTitle   string `json:"category_title" binding:"required"`
-	Keyword         string `json:"keyword" binding:"required"`
-	MetaTitle       string `json:"meta_title" binding:"required"`
-	MetaDescription string `json:"meta_description" binding:"required"`
-	SeoFooter       string `json:"seo_footer" binding:"required"`
-	URLSlug         string `json:"url_slug" binding:"required"`
+	CountryID           string `json:"country_id" binding:"required"`
+	CategoryTitle       string `json:"category_title" binding:"required"`
+	Keyword             string `json:"keyword" binding:"required"`
+	MetaTitle           string `json:"meta_title" binding:"required"`
+	MetaDescription     string `json:"meta_description" binding:"required"`
+	SeoFooter           string `json:"seo_footer" binding:"required"`
+	URLSlug             string `json:"url_slug" binding:"required"`
+	CategoryDescription string `json:"category_description" binding:"required"`
+	ImageAlt            string `json:"image_alt" binding:"required"`
 }
 type ProductCategoryPageSave struct {
 	Name                                 string                                     `json:"name" binding:"required"`
