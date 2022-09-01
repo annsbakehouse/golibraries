@@ -58,25 +58,25 @@ func (p *ProductDataLibrariesModel) AfterUpdate(tx *gorm.DB) (err error) {
 
 //strcture input
 type ProductDataLibrariesModelInput struct {
-	ProductModelDataID         string `json:"product_model_data_id" binding:"required"`
+	ProductModelDataID         string `json:"product_model_data_id"`
 	ProductLibraryID           string `json:"product_library_id" binding:"required"`
 	ProductLibraryPropertiesID string `json:"product_library_properties_id" binding:"required"`
-	CustomerLevelID            string `json:"customer_level_id"`
+	CustomerLevelID            string `json:"customer_level_id" binding:"required"`
 	ProductID                  string `json:"product_id"`
 	ProductModelID             string `json:"product_model_id"`
 	IsRequired                 int    `json:"is_required"`
-	LinkTo                     int64  `json:"link_to"`
+	LinkTo                     int64  `json:"link_to" binding:"required"`
 }
 type ProductDataLibrariesModelUpdate struct {
 	ID                         string `json:"id" binding:"required"`
-	ProductModelDataID         string `json:"product_model_data_id" binding:"required"`
+	ProductModelDataID         string `json:"product_model_data_id"`
 	ProductLibraryID           string `json:"product_library_id" binding:"required"`
 	ProductLibraryPropertiesID string `json:"product_library_properties_id" binding:"required"`
-	CustomerLevelID            string `json:"customer_level_id"`
+	CustomerLevelID            string `json:"customer_level_id" binding:"required"`
 	ProductID                  string `json:"product_id"`
 	ProductModelID             string `json:"product_model_id"`
 	IsRequired                 int    `json:"is_required"`
-	LinkTo                     int64  `json:"link_to"`
+	LinkTo                     int64  `json:"link_to" binding:"required"`
 }
 
 type ProductDataLibrariesModelInfo struct {

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+	"math/rand"
 	"time"
 
 	"gorm.io/gorm"
@@ -33,6 +35,7 @@ type CustomerRetailModel struct {
 	INC                 int        `gorm:"<-:false;column:inc" json:"inc"`                          //
 	NewsletterSubscribe int        `gorm:"column:newsletter_subscribe" json:"newsletter_subscribe"` //
 	AllowLogin          int        `gorm:"column:allow_login" json:"allow_login"`                   //
+	Secret              string     `gorm:"column:secret" json:"secret"`                             //
 	CreatedBy           NullString `gorm:"column:created_by" json:"created_by"`                     //
 	CreatedAt           time.Time  `gorm:"column:created_at" json:"created_at"`                     //
 	UpdatedBy           NullString `gorm:"column:updated_by" json:"updated_by"`                     //
@@ -68,6 +71,7 @@ type CustomerRetailModelPreload struct {
 	INC                 int                    `gorm:"<-:false;column:inc" json:"inc"`                          //
 	NewsletterSubscribe int                    `gorm:"column:newsletter_subscribe" json:"newsletter_subscribe"` //
 	AllowLogin          int                    `gorm:"column:allow_login" json:"allow_login"`                   //
+	Secret              string                 `gorm:"column:secret" json:"secret"`                             //
 	PhoneCountry1Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID1;references:ID" json:"phone1_country_info"`
 	PhoneCountry2Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID2;references:ID" json:"phone2_country_info"`
 	PhoneCountry3Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID3;references:ID" json:"phone3_country_info"`
@@ -81,8 +85,21 @@ func (c *CustomerRetailModel) TableName() string {
 func (c *CustomerRetailModelPreload) TableName() string {
 	return "customer_retail"
 }
-
+func GetRandomSecret(tx *gorm.DB) string {
+	length := 50
+	rand.Seed(time.Now().UnixNano())
+	b := make([]byte, length)
+	rand.Read(b)
+	secret := fmt.Sprintf("%x", b)[:length]
+	var model CustomerRetailModel
+	res := tx.Model(&model).Where("secret=?", secret).First(&model)
+	if res.RowsAffected == 0 {
+		return secret
+	}
+	return GetRandomSecret(tx)
+}
 func (c *CustomerRetailModel) BeforeCreate(tx *gorm.DB) (err error) {
+	c.Secret = GetRandomSecret(tx)
 	return
 }
 
@@ -118,8 +135,11 @@ type CustomerRetailSaveForm struct {
 	Gender            int    `json:"gender"`                                  //
 	Email             string `json:"email" binding:"required"`                //
 	InternalShortNote string `json:"internal_short_note"`                     //
-	InternalLongNote  string `json:"internal_long_note"`                      //
+	InternalLongNote  string `json:"internal_long_note"`
+	CustomersLevelID  string `json:"customers_level_id" binding:"required"` //
+	//
 }
+
 type CustomerRetailUpdatePersonalForm struct {
 	ID                string `json:"id" binding:"required"`
 	Name              string `json:"name" binding:"required"`                 //

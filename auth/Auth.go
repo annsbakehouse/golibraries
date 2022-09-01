@@ -85,6 +85,7 @@ func TokenGenerator(data interface{}) (string, error) {
 			claims := jwt.MapClaims{}
 			claims["authorized"] = true
 			claims["exp"] = time.Now().Add(time.Hour * time.Duration(tokenLifeTime)).Unix()
+			fmt.Println(claims["exp"])
 			claims["exp_time"] = time.Now().Add(time.Hour * time.Duration(tokenLifeTime))
 			for k, v := range dataInterface {
 				claims[k] = v
