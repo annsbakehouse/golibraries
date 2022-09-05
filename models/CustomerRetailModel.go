@@ -38,6 +38,7 @@ type CustomerRetailModel struct {
 	Secret              string     `gorm:"column:secret" json:"secret"`                             //
 	ForgotCount         int        `gorm:"column:forgot_count" json:"forgot_count"`                 //
 	ForgotTime          time.Time  `gorm:"column:forgot_time" json:"forgot_time"`                   //
+	ForgotToken         NullString `gorm:"column:forgot_token" json:"forgot_token"`                 //
 	CreatedBy           NullString `gorm:"column:created_by" json:"created_by"`                     //
 	CreatedAt           time.Time  `gorm:"column:created_at" json:"created_at"`                     //
 	UpdatedBy           NullString `gorm:"column:updated_by" json:"updated_by"`                     //
@@ -76,6 +77,7 @@ type CustomerRetailModelPreload struct {
 	Secret              string                 `gorm:"column:secret" json:"secret"`                             //
 	ForgotCount         int                    `gorm:"column:forgot_count" json:"forgot_count"`                 //
 	ForgotTime          time.Time              `gorm:"column:forgot_time" json:"forgot_time"`                   //
+	ForgotToken         NullString             `gorm:"column:forgot_token" json:"forgot_token"`                 //
 	PhoneCountry1Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID1;references:ID" json:"phone1_country_info"`
 	PhoneCountry2Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID2;references:ID" json:"phone2_country_info"`
 	PhoneCountry3Info   CountryModelPreload    `gorm:"foreignKey:PhoneCountryID3;references:ID" json:"phone3_country_info"`
