@@ -3,11 +3,12 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
+	"github.com/annsbakehouse/golibraries/library"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,55 +27,23 @@ func CollectionPageHitRules(c *gin.Context, endpoint string) (int, int) {
 	return 0, 0
 }
 
-type FrontEndTokenForm struct {
-	Token string `json:"token" binding:"required"`
-}
-
-func ExtractFrontEndToken(c *gin.Context) (map[string]interface{}, error) {
-	body := c.Request.Body
-	x, _ := ioutil.ReadAll(body)
-	fmt.Println(string(x))
-	return nil, nil
-}
-func FrontEndTokenCheck() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var form FrontEndTokenForm
-		if err := c.BindJSON(&form); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"status":  http.StatusBadRequest,
-				"message": err.Error(),
-				"error":   true,
-			})
-			c.Abort()
-			return
-		}
-		c.Next()
-	}
-	//var form FrontEndTokenForm
-	// var form FrontEndTokenForm
-	// if err := c.BindJSON(&form); err != nil {
+func FrontEndTokenCheck(c *gin.Context) {
+	// body := c.Request.Body
+	// t, _ := ioutil.ReadAll(body)
+	// stringJson, _ := library.JsonDecode(string(t))
+	// if stringJson["token"] == nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{
 	// 		"status":  http.StatusBadRequest,
-	// 		"message": err.Error(),
+	// 		"message": "Token Request Required",
 	// 		"error":   true,
 	// 	})
 	// 	c.Abort()
-	// 	return
 	// }
-	// return
+	// c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(t))
 
-	// if err := c.BindJSON(&form); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{
-	// 		"status":  http.StatusBadRequest,
-	// 		"message": err.Error(),
-	// 		"error":   true,
-	// 	})
-	// 	c.Abort()
-	// 	return
-	// }
-
+	// token := fmt.Sprintf("%v", stringJson["token"])
 	// key := []byte(os.Getenv("chiper_token"))
-	// text, _ := library.DecryptAES256(key, form.Token)
+	// text, _ := library.DecryptAES256(key, token)
 	// text = library.Base64Decode(text)
 	// textSplit := strings.Split(text, "|")
 	// if len(textSplit) != 5 {
@@ -104,11 +73,12 @@ func FrontEndTokenCheck() gin.HandlerFunc {
 	// 	var model []models.HiltLogModel
 	// 	tnow := time.Now()
 	// 	then := time.Date(tnow.Year(), tnow.Month(), tnow.Day(), tnow.Hour(), tnow.Minute(), tnow.Second()-time_range_second, tnow.Nanosecond(), tnow.Location())
-	// 	res := dbReader.Model(&model).Where("cust_time>=?", then.Format("2006-01-02 15:04:05"))
-	// 	res.Where("cust_time<=?", tnow.Format("2006-01-02 15:04:05"))
+
+	// 	res := dbReader.Model(&model).Where("created_at>=?", then.Format("2006-01-02 15:04:05"))
 	// 	res.Where("ip=?", textSplit[1])
 	// 	res.Where("device_id=?", textSplit[0])
 	// 	res.Find(&model)
+	// 	fmt.Println(res.RowsAffected, " ", max_hit)
 	// 	if int(res.RowsAffected) >= max_hit {
 	// 		c.JSON(http.StatusUnauthorized, gin.H{
 	// 			"status":  http.StatusUnauthorized,
@@ -149,11 +119,67 @@ func FrontEndTokenCheck() gin.HandlerFunc {
 	// 	tx.Rollback()
 	// 	c.JSON(http.StatusBadRequest, gin.H{
 	// 		"status":  http.StatusBadRequest,
-	// 		"message": fmt.Sprintf("%v", result.Error) + "aaaa",
+	// 		"message": fmt.Sprintf("%v", result.Error),
 	// 		"error":   true,
 	// 	})
 	// 	c.Abort()
 	// 	return
 	// }
 	// tx.Commit()
+}
+
+type GlobalToken struct {
+	UID        string `json:"uid" binding:"required"`
+	EndPoint   string `json:"endpoint"`
+	DeviceInfo string `json:"info"`
+}
+
+func GetFrontendGlobalToken(c *gin.Context) {
+	var form GlobalToken
+	if err := c.BindJSON(&form); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"message": err.Error(),
+			"error":   true,
+		})
+		return
+	}
+	StringToken := form.UID + "|" + c.ClientIP() + "|" + time.Now().Format("2006-01-02 15:04:05") + "|" + form.EndPoint + "|" + form.DeviceInfo
+	StringToken = library.Base64Encode(StringToken)
+	key := []byte(os.Getenv("chiper_token"))
+	StringToken, _ = library.EncryptAES256(key, StringToken)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Proccess Done",
+		"token":   StringToken,
+		"error":   false,
+	})
+	return
+}
+
+type GlobalTokenCheck struct {
+	Token string `json:"token" binding:"required"`
+}
+
+func GetFrontendCheckToken(c *gin.Context) {
+	var form GlobalTokenCheck
+	if err := c.BindJSON(&form); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"message": err.Error(),
+			"error":   true,
+		})
+		return
+	}
+	token := form.Token
+	key := []byte(os.Getenv("chiper_token"))
+	text, _ := library.DecryptAES256(key, token)
+	text = library.Base64Decode(text)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": "Proccess Done",
+		"token":   text,
+		"error":   false,
+	})
+	return
 }

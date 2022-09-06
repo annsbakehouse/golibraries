@@ -27,7 +27,28 @@ type CustomerCorporateModel struct {
 	// DeletedAt         soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
 }
 
+type CustomerCorporateModelPreload struct {
+	ID                 string                     `gorm:"column:id;primary_key" json:"id"`                   //
+	CCID               NullString                 `gorm:"column:ccid" json:"ccid"`                           //
+	AltName            NullString                 `gorm:"column:alt_name" json:"alt_name"`                   //
+	AutoOrderNote      NullString                 `gorm:"column:auto_order_note" json:"auto_order_note"`     //
+	AutoInvoiceNote    NullString                 `gorm:"column:auto_invoice_note" json:"auto_invoice_note"` //
+	Active             int                        `gorm:"column:active" json:"active"`                       //
+	EmployeeId         NullString                 `gorm:"column:employee_id" json:"employee_id"`             //
+	CoaId              NullString                 `gorm:"column:coa_id" json:"coa_id"`                       //
+	MaxAr              float32                    `gorm:"column:max_ar" json:"max_ar"`                       //
+	BillingAddress     NullString                 `gorm:"column:billing_address" json:"billing_address"`     //
+	CustomerRetailId   string                     `gorm:"column:customer_retail_id" json:"customer_retail_id"`
+	OverdueLimit       int                        `gorm:"column:overdue_limit" json:"overdue_limit"`
+	CustomerRetailInfo CustomerRetailModelPreload `gorm:"foreignKey:CustomerRetailId;references:ID" json:"customer_retail_info"`
+	ContactPersonInfo  []ContactPersonPreload     `gorm:"foreignKey:CustomerCorporateId;references:ID" json:"contact_persons"`
+}
+
 func (c *CustomerCorporateModel) TableName() string {
+	return "customer_corporate"
+}
+
+func (c *CustomerCorporateModelPreload) TableName() string {
 	return "customer_corporate"
 }
 
