@@ -15,6 +15,9 @@ type PaymentTypeModel struct {
 	SystemTagging  NullString `gorm:"column:system_tagging" json:"system_tagging"`
 	Ordering       NullInt64  `gorm:"column:ordering" json:"ordering"`
 	Active         int        `gorm:"column:active" json:"active"`
+	Text_1         NullString `gorm:"column:text_1" json:"text_1"`
+	Text_2         NullString `gorm:"column:text_2" json:"text_2"`
+	Text_3         NullString `gorm:"column:text_3" json:"text_3"`
 	CreatedBy      NullString `gorm:"column:created_by" json:"created_by"`
 	CreatedAt      time.Time  `gorm:"column:created_at" json:"created_at"`
 	UpdatedBy      NullString `gorm:"column:updated_by" json:"updated_by"`
@@ -29,6 +32,9 @@ type PaymentTypeModelPreload struct {
 	SystemTagging  NullString     `gorm:"column:system_tagging" json:"system_tagging"`
 	Ordering       NullInt64      `gorm:"column:ordering" json:"ordering"`
 	Active         int            `gorm:"column:active" json:"active"`
+	Text_1         NullString     `gorm:"column:text_1" json:"text_1"`
+	Text_2         NullString     `gorm:"column:text_2" json:"text_2"`
+	Text_3         NullString     `gorm:"column:text_3" json:"text_3"`
 	CoaInfo        CoaModelNested `gorm:"foreignKey:CoaID;references:ID" json:"coa_info"`
 }
 
@@ -55,6 +61,9 @@ type PaymentTypeInputSave struct {
 	ThirdPartyName string `json:"third_party_name"`
 	SystemTagging  string `json:"system_tagging"`
 	Ordering       int    `json:"ordering"`
+	Text_1         string `json:"text_1"`
+	Text_2         string `json:"text_2"`
+	Text_3         string `json:"text_3"`
 	Active         int    `json:"active"`
 }
 
@@ -66,6 +75,9 @@ type PaymentTypeInputUpdate struct {
 	ThirdPartyName string `json:"third_party_name"`
 	SystemTagging  string `json:"system_tagging"`
 	Ordering       int    `json:"ordering"`
+	Text_1         string `json:"text_1"`
+	Text_2         string `json:"text_2"`
+	Text_3         string `json:"text_3"`
 	Active         int    `json:"active"`
 }
 

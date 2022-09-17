@@ -97,4 +97,5 @@ type MultiProductCampaignModelUsageInfo struct {
 	Usage           int    `json:"usage" binding:"required"`
 	CountryId       string `json:"country_id" binding:"required"`
 	CustomerLevelID string `json:"customer_level_id"`
+	Limit           int    `json:"limit" binding:"required"`
 }

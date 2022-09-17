@@ -3,6 +3,8 @@ package library
 import (
 	"encoding/base64"
 	"errors"
+	"io"
+	"log"
 	"math/rand"
 	"os"
 	"strings"
@@ -15,6 +17,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"image"
+	"image/color"
+	_ "image/color"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -34,6 +38,7 @@ var (
 )
 
 func SaveImageToDisk(fileNameBase, data string) (string, error) {
+	splitter := strings.Split(data, ";base64,")
 	idx := strings.Index(data, ";base64,")
 	if idx < 0 {
 		return "", ErrInvalidImage
@@ -44,6 +49,17 @@ func SaveImageToDisk(fileNameBase, data string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	if len(splitter) > 0 && splitter[0] == "data:image/svg+xml" {
+		decode := func(io.Reader) (image.Image, error) {
+			return image.NewRGBA(image.Rect(0, 0, 1, 1)), nil
+		}
+		decodeConfig := func(io.Reader) (image.Config, error) {
+			return image.Config{ColorModel: color.RGBAModel, Width: 1, Height: 1}, nil
+		}
+		image.RegisterFormat("svg", "<?xml ", decode, decodeConfig)
+		image.RegisterFormat("svg", "<svg", decode, decodeConfig)
+	}
+
 	imgCfg, fm, err := image.DecodeConfig(bytes.NewReader(buff.Bytes()))
 	if err != nil {
 		return "", err
@@ -54,8 +70,13 @@ func SaveImageToDisk(fileNameBase, data string) (string, error) {
 	}
 
 	fileName := fileNameBase + "." + fm
-	ioutil.WriteFile(fileName, buff.Bytes(), 0644)
-
+	// fmt.Println("===============================")
+	// fmt.Println(fileName)
+	// fmt.Println("===============================")
+	err = ioutil.WriteFile(fileName, buff.Bytes(), 0644)
+	if err != nil {
+		log.Panic(err)
+	}
 	return fileName, err
 }
 

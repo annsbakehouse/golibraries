@@ -1,11 +1,14 @@
 package auth
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/annsbakehouse/golibraries/library"
@@ -28,34 +31,36 @@ func CollectionPageHitRules(c *gin.Context, endpoint string) (int, int) {
 }
 
 func FrontEndTokenCheck(c *gin.Context) {
-	// body := c.Request.Body
-	// t, _ := ioutil.ReadAll(body)
-	// stringJson, _ := library.JsonDecode(string(t))
-	// if stringJson["token"] == nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{
-	// 		"status":  http.StatusBadRequest,
-	// 		"message": "Token Request Required",
-	// 		"error":   true,
-	// 	})
-	// 	c.Abort()
-	// }
-	// c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(t))
+	body := c.Request.Body
+	t, _ := ioutil.ReadAll(body)
+	//fullPath := c.FullPath()
+	stringJson, _ := library.JsonDecode(string(t))
+	if stringJson["token"] == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":  http.StatusBadRequest,
+			"message": "Token Request Required",
+			"error":   true,
+		})
+		c.Abort()
+	}
+	c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(t))
 
-	// token := fmt.Sprintf("%v", stringJson["token"])
-	// key := []byte(os.Getenv("chiper_token"))
-	// text, _ := library.DecryptAES256(key, token)
-	// text = library.Base64Decode(text)
-	// textSplit := strings.Split(text, "|")
-	// if len(textSplit) != 5 {
-	// 	c.JSON(http.StatusUnauthorized, gin.H{
-	// 		"status":  http.StatusUnauthorized,
-	// 		"message": "You have wrong authorization",
-	// 		"error":   true,
-	// 	})
-	// 	c.Abort()
-	// 	return
-	// }
+	token := fmt.Sprintf("%v", stringJson["token"])
+	key := []byte(os.Getenv("chiper_token"))
+	text, _ := library.DecryptAES256(key, token)
+	text = library.Base64Decode(text)
+	textSplit := strings.Split(text, "|")
+	if len(textSplit) != 5 {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"status":  http.StatusUnauthorized,
+			"message": "You have wrong authorization",
+			"error":   true,
+		})
+		c.Abort()
+		return
+	}
 	// clientip := c.ClientIP()
+	// fmt.Println("Client IP :", clientip)
 	// if textSplit[1] != clientip {
 	// 	c.JSON(http.StatusUnauthorized, gin.H{
 	// 		"status":  http.StatusUnauthorized,
@@ -74,11 +79,10 @@ func FrontEndTokenCheck(c *gin.Context) {
 	// 	tnow := time.Now()
 	// 	then := time.Date(tnow.Year(), tnow.Month(), tnow.Day(), tnow.Hour(), tnow.Minute(), tnow.Second()-time_range_second, tnow.Nanosecond(), tnow.Location())
 
-	// 	res := dbReader.Model(&model).Where("created_at>=?", then.Format("2006-01-02 15:04:05"))
+	// 	res := dbReader.Model(&model).Where("cust_time>=?", then.Format("2006-01-02 15:04:05"))
 	// 	res.Where("ip=?", textSplit[1])
 	// 	res.Where("device_id=?", textSplit[0])
 	// 	res.Find(&model)
-	// 	fmt.Println(res.RowsAffected, " ", max_hit)
 	// 	if int(res.RowsAffected) >= max_hit {
 	// 		c.JSON(http.StatusUnauthorized, gin.H{
 	// 			"status":  http.StatusUnauthorized,
@@ -108,11 +112,12 @@ func FrontEndTokenCheck(c *gin.Context) {
 	// }
 	// custTime, _ := time.Parse("2006-01-02 15:04:05", textSplit[2])
 	// var model = models.HiltLogModel{
-	// 	IP:         textSplit[1],
-	// 	DeviceID:   textSplit[0],
-	// 	CustTime:   custTime,
-	// 	EndPoint:   textSplit[3],
-	// 	DeviceInfo: textSplit[4],
+	// 	IP:             textSplit[1],
+	// 	DeviceID:       textSplit[0],
+	// 	CustTime:       custTime,
+	// 	EndPoint:       textSplit[3],
+	// 	DeviceInfo:     textSplit[4],
+	// 	EndPointServer: fullPath,
 	// }
 	// result := tx.Create(&model)
 	// if result.Error != nil {

@@ -15,9 +15,10 @@ type CustomPageImageModel struct {
 }
 
 type CustomPageImageModelPreload struct {
-	ID           string `gorm:"column:id;primary_key" json:"id"`
-	CustomPageID string `gorm:"column:mkt_custom_page_id" json:"mkt_custom_page_id"`
-	Image        string `gorm:"column:image" json:"image"`
+	ID           string    `gorm:"column:id;primary_key" json:"id"`
+	CustomPageID string    `gorm:"column:mkt_custom_page_id" json:"mkt_custom_page_id"`
+	Image        string    `gorm:"column:image" json:"image"`
+	CreatedAt    time.Time `gorm:"column:created_at" json:"created_at"`
 }
 
 type CustomPageImageModelFrontend struct {

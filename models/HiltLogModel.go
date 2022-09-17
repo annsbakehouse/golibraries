@@ -7,12 +7,13 @@ import (
 )
 
 type HiltLogModel struct {
-	IP         string    `gorm:"column:ip" json:"ip"`
-	DeviceID   string    `gorm:"column:device_id" json:"device_id"`
-	CustTime   time.Time `gorm:"column:cust_time" json:"cust_time"`
-	EndPoint   string    `gorm:"column:end_point" json:"end_point"`
-	DeviceInfo string    `gorm:"column:device_info" json:"device_info"`
-	CreatedAt  time.Time `gorm:"column:created_at" json:"created_at"`
+	IP             string    `gorm:"column:ip" json:"ip"`
+	DeviceID       string    `gorm:"column:device_id" json:"device_id"`
+	CustTime       time.Time `gorm:"column:cust_time" json:"cust_time"`
+	EndPoint       string    `gorm:"column:end_point" json:"end_point"`
+	EndPointServer string    `gorm:"column:end_point_server" json:"end_point_server"`
+	DeviceInfo     string    `gorm:"column:device_info" json:"device_info"`
+	CreatedAt      time.Time `gorm:"column:created_at" json:"created_at"`
 	// DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
 }
 
