@@ -136,16 +136,43 @@ func NullInt64Input(s int64) NullInt64 {
 
 //parse null time on model
 type NullDateTime struct {
-	sql.NullString
+	sql.NullTime
 }
 
 //parse null time on model
 func (nt NullDateTime) MarshalJSON() ([]byte, error) {
 	if nt.Valid {
-		t, _ := time.Parse(time.RFC3339, nt.String)
+		t := nt.Time
 		return json.Marshal(t.Format("2006-01-02 15:04:05"))
 	}
 	return []byte(`null`), nil
+}
+
+func NullDateTimeInput(t time.Time) NullDateTime {
+	if t.IsZero() {
+		return NullDateTime{sql.NullTime{time.Time{}, false}}
+	}
+	return NullDateTime{sql.NullTime{t, true}}
+}
+
+//date
+type NullDate struct {
+	sql.NullTime
+}
+
+func (nt NullDate) MarshalJSON() ([]byte, error) {
+	if nt.Valid {
+		t := nt.Time
+		return json.Marshal(t.Format("2006-01-02"))
+	}
+	return []byte(`null`), nil
+}
+
+func NullDateInput(t time.Time) NullDate {
+	if t.IsZero() {
+		return NullDate{sql.NullTime{time.Time{}, false}}
+	}
+	return NullDate{sql.NullTime{t, true}}
 }
 
 //get Columns Name from Model

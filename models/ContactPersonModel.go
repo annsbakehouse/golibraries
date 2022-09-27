@@ -27,10 +27,10 @@ type ContactPersonFormSave struct {
 	CustomerCorporateId string `json:"customer_corporate_id" binding:"required"`
 	CustomerRetailID    string `json:"customer_retail_id" binding:"required"`
 	DefaultSenderName   string `json:"default_sender_name" binding:"required"`
-	PhoneCountryId      string `json:"phone_country_id" binding:"required"`
-	PhoneCountryCode    string `json:"phone_country_code" binding:"required"`
-	Phone               string `json:"phone"`
-	DefaultSenderPhone  string `json:"default_sender_phone"`
+	// PhoneCountryId      string `json:"phone_country_id"`
+	// PhoneCountryCode    string `json:"phone_country_code"`
+	// Phone               string `json:"phone"`
+	DefaultSenderPhone string `json:"default_sender_phone"`
 }
 
 type ContactPersonPreload struct {

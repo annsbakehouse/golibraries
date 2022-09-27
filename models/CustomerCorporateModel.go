@@ -47,7 +47,7 @@ type CustomerCorporateModelPreload struct {
 	PaymentTypeId        NullString                   `gorm:"column:payment_type_id" json:"payment_type_id"`
 	ContactPersonInfo    []ContactPersonPreload       `gorm:"foreignKey:CustomerCorporateId;references:ID" json:"contact_persons"`
 	PaymentTypeInfo      PaymentTypeModelPreload      `gorm:"foreignKey:PaymentTypeId;references:ID" json:"payment_type_info"`
-	AccountExecutiveInfo AccountExecutiveModelPreload `gorm:"foreignKey:AccountExecutiveId;references:ID" json:"acount_executive_info"`
+	AccountExecutiveInfo AccountExecutiveModelPreload `gorm:"foreignKey:AccountExecutiveId;references:ID" json:"account_executive_info"`
 }
 
 func (c *CustomerCorporateModel) TableName() string {

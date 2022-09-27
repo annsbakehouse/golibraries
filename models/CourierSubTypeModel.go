@@ -68,3 +68,7 @@ type CourierSubTypeModelUpdate struct {
 	Name   string `json:"name" binding:"required,max:100"`
 	Active uint64 `json:"active"`
 }
+
+type CourierSubTypeSelectByType struct {
+	CourierTypeID string `json:"courier_type_id" binding:"required"`
+}

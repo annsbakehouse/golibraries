@@ -36,6 +36,7 @@ type CustomerRetailModel struct {
 	NewsletterSubscribe int        `gorm:"column:newsletter_subscribe" json:"newsletter_subscribe"` //
 	AllowLogin          int        `gorm:"column:allow_login" json:"allow_login"`                   //
 	Secret              string     `gorm:"column:secret" json:"secret"`                             //
+	Active              int        `gorm:"column:active" json:"active"`                             //
 	ForgotCount         int        `gorm:"column:forgot_count" json:"forgot_count"`                 //
 	ForgotTime          time.Time  `gorm:"column:forgot_time" json:"forgot_time"`                   //
 	ForgotToken         NullString `gorm:"column:forgot_token" json:"forgot_token"`                 //
@@ -75,6 +76,7 @@ type CustomerRetailModelPreload struct {
 	NewsletterSubscribe int                    `gorm:"column:newsletter_subscribe" json:"newsletter_subscribe"` //
 	AllowLogin          int                    `gorm:"column:allow_login" json:"allow_login"`                   //
 	Secret              string                 `gorm:"column:secret" json:"secret"`                             //
+	Active              int                    `gorm:"column:active" json:"active"`                             //
 	ForgotCount         int                    `gorm:"column:forgot_count" json:"forgot_count"`                 //
 	ForgotTime          time.Time              `gorm:"column:forgot_time" json:"forgot_time"`                   //
 	ForgotToken         NullString             `gorm:"column:forgot_token" json:"forgot_token"`                 //
@@ -102,6 +104,7 @@ type CustomerRetailContactModelPreload struct {
 	PhoneNote3        NullString `gorm:"column:phone_3_note" json:"phone_3_note"`                 //
 	Birthday          NullString `gorm:"column:birthday" json:"birthday"`                         //
 	Gender            int        `gorm:"column:gender" json:"gender"`                             //
+	Active            int        `gorm:"column:acive" json:"active"`                              //
 	Email             NullString `gorm:"column:email" json:"email"`                               //
 	Password          NullString `gorm:"column:password" json:"password"`                         //
 	InternalShortNote NullString `gorm:"column:internal_short_note" json:"internal_short_note"`   //
@@ -170,6 +173,7 @@ type CustomerRetailSaveForm struct {
 	Birthday          string `json:"birthday"`                                //
 	Gender            int    `json:"gender"`                                  //
 	Email             string `json:"email" binding:"required"`                //
+	Active            int    `json:"active"`                                  //
 	InternalShortNote string `json:"internal_short_note"`                     //
 	InternalLongNote  string `json:"internal_long_note"`
 	CustomersLevelID  string `json:"customers_level_id" binding:"required"` //
@@ -194,6 +198,7 @@ type CustomerRetailUpdatePersonalForm struct {
 	Birthday          string `json:"birthday"`                                //
 	Gender            int    `json:"gender"`                                  //
 	Email             string `json:"email" binding:"required"`                //
+	Active            int    `json:"active"`                                  //
 	InternalShortNote string `json:"internal_short_note"`                     //
 	InternalLongNote  string `json:"internal_long_note"`                      //
 }

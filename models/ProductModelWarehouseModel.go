@@ -22,13 +22,14 @@ type ProductModelWarehouseModel struct {
 }
 
 type ProductModelWarehouseModelPreload struct {
-	ID                 string  `gorm:"column:id;primary_key" json:"id"`
-	ProductModelDataID string  `gorm:"column:product_model_data_id" json:"product_model_data_id"`
-	WarehouseType      int     `gorm:"column:warehouse_type" json:"warehouse_type"`
-	WarehouseFrom      string  `gorm:"column:warehouse_from" json:"warehouse_from"`
-	WarehouseTo        string  `gorm:"column:warehouse_to" json:"warehouse_to"`
-	ProductionTime     float64 `gorm:"column:production_time" json:"production_time"`
-	// DeletedAt          soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"deleted_at"`
+	ID                 string                `gorm:"column:id;primary_key" json:"id"`
+	ProductModelDataID string                `gorm:"column:product_model_data_id" json:"product_model_data_id"`
+	WarehouseType      int                   `gorm:"column:warehouse_type" json:"warehouse_type"`
+	WarehouseFrom      string                `gorm:"column:warehouse_from" json:"warehouse_from"`
+	WarehouseTo        string                `gorm:"column:warehouse_to" json:"warehouse_to"`
+	ProductionTime     float64               `gorm:"column:production_time" json:"production_time"`
+	WarehouseFromInfo  WarehousePreloadModel `gorm:"foreignKey:WarehouseFrom;references:ID" json:"warehouse_from_info"`
+	WarehouseToInfo    WarehousePreloadModel `gorm:"foreignKey:WarehouseTo;references:ID" json:"warehouse_to_info"`
 }
 
 // TableName sets the insert table name for this struct type

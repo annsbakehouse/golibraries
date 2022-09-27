@@ -24,6 +24,8 @@ import (
 	_ "image/png"
 	"io/ioutil"
 	"strconv"
+
+	qrcode "github.com/skip2/go-qrcode"
 )
 
 var (
@@ -262,4 +264,19 @@ func GetBreadCrumb(mode int, url string, db *gorm.DB) {
 	//code
 	//0 product
 
+}
+func EmailCheck(email string) bool {
+	errFormat := EmailCheckerValidateFormat(email)
+	errMX := EmailCheckerValidateMX(email)
+	errHost := EmailCheckerValidateHost(email)
+
+	if errFormat != nil || errMX != nil || errHost != nil {
+		return false
+	}
+	return true
+}
+
+func GenerateQRCode(data string, savepath string, size int) error {
+	err := qrcode.WriteFile(data, qrcode.Medium, size, savepath)
+	return err
 }

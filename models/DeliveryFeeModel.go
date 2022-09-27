@@ -46,6 +46,7 @@ type DeliveryFeeModelPreload struct {
 	SubDistrictInfo SubDistrictModelPreload    `gorm:"foreignKey:ID;references:SubdistrictId" json:"subdistrict_info"`
 	CourierInfo     CourierTypeModelPreload    `gorm:"foreignKey:ID;references:CourierTypeId" json:"courier_info"`
 	SubCourierInfo  CourierSubTypeModelPreload `gorm:"foreignKey:ID;references:CourierSubtypeId" json:"subcourier_info"`
+	WareouseInfo    WarehousePreloadModel      `gorm:"foreignKey:ID;references:WarehouseID" json:"warehouse_info"`
 }
 
 // TableName sets the insert table name for this struct type

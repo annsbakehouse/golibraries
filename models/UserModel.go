@@ -9,6 +9,7 @@ import (
 	"fmt"
 
 	"github.com/annsbakehouse/golibraries/library"
+	"github.com/google/uuid"
 )
 
 type UserModel struct {
@@ -31,13 +32,31 @@ type UserModel struct {
 func (u *UserModel) TableName() string {
 	return "user"
 }
-
+func UserModelQR(data string, id string) string {
+	if len(data) == 0 {
+		data = uuid.New().String()
+	}
+	var model []UserModel
+	db, dbReader, _ := DbConnect()
+	defer db.Close()
+	res := dbReader.Model(&model).Where("qr=?", data)
+	if len(id) > 0 {
+		res.Where("id!=?", id)
+	}
+	res.Find(&model)
+	if res.RowsAffected == 0 {
+		return data
+	}
+	uid := uuid.New().String()
+	return UserModelQR(uid, id)
+}
 func (u *UserModel) BeforeCreate(tx *gorm.DB) (err error) {
 	_, dbReader, _ := DbConnect()
 	var sequence int
 	dbReader.Raw("SELECT last_value FROM user_inc_seq").Scan(&sequence)
 	genericUID := library.GenUID(sequence+1, 2, 2)
 	u.UID = NullStringInput(fmt.Sprintf("%v", genericUID))
+	u.Qr = NullStringInput(UserModelQR(u.Qr.String, ""))
 	return nil
 }
 

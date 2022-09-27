@@ -27,7 +27,7 @@ func SIBSendEmail(subject string, to SIBTo, sender SIBSender, html string) {
 	data := SIBPayload{
 		Sender:      sender,
 		To:          []SIBTo{to},
-		Subject:     "Email test Anns Go",
+		Subject:     subject,
 		HTMLContent: html,
 	}
 	payloadBytes, err := json.Marshal(data)
