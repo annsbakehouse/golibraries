@@ -88,3 +88,6 @@ type ProductModelUpdate struct {
 type ProductModelInfo struct {
 	ID string `json:"id" binding:"required"`
 }
+type ProductModelInfoByCourierType struct {
+	CourierTypeID string `json:"courier_type_id" binding:"required"`
+}

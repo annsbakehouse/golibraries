@@ -115,16 +115,15 @@ func FileExists(name string) (bool, error) {
 	return false, err
 }
 
-func GenUID(sequence int, lengthNumber int, charMinLenght int) string {
+func GenUID(sequence int, lengthNumber int, charMaxLenght int) string {
 	stringSequence := fmt.Sprintf("%v", sequence)
 	if len(stringSequence) > lengthNumber {
-		fmt.Println(stringSequence)
-		prefix := stringSequence[0 : len(stringSequence)-lengthNumber]
-		suffix := stringSequence[len(stringSequence)-lengthNumber : len(stringSequence)]
+		prefix := stringSequence[0 : len(stringSequence)-charMaxLenght]
+		suffix := stringSequence[len(stringSequence)-charMaxLenght : len(stringSequence)]
 		numIn, _ := strconv.Atoi(prefix)
-		output := GenUIDToAlpha(numIn, "")
-		if len(output) < charMinLenght {
-			iOutput := charMinLenght - len(output)
+		output := GenUIDToAlpha(numIn, "", charMaxLenght)
+		if len(output) < charMaxLenght {
+			iOutput := charMaxLenght - len(output)
 			n := 0
 			for n < iOutput {
 				output = "A" + output
@@ -133,16 +132,17 @@ func GenUID(sequence int, lengthNumber int, charMinLenght int) string {
 		}
 		return output + suffix
 	} else {
-
 		if len(stringSequence) < lengthNumber {
 			i := 0
-			for i < lengthNumber-len(stringSequence) {
+			ln := len(stringSequence)
+			for i < lengthNumber-ln {
 				stringSequence = "0" + stringSequence
 				i++
 			}
 		}
+
 		n := 0
-		for n < charMinLenght {
+		for n < charMaxLenght {
 			stringSequence = "A" + stringSequence
 			n++
 		}
@@ -150,12 +150,15 @@ func GenUID(sequence int, lengthNumber int, charMinLenght int) string {
 	}
 	return ""
 }
-func GenUIDToAlpha(num int, addString string) string {
+func GenUIDToAlpha(num int, addString string, ln int) string {
 	if num <= 26 {
 		return string('A'-1+num) + addString
 	} else {
+		if len(addString) >= ln {
+			return addString + fmt.Sprintf("%v", num)
+		}
 		total := num - 26
-		return GenUIDToAlpha(total, string('A'-1+26)+addString)
+		return GenUIDToAlpha(total, string('A'-1+26)+addString, ln)
 	}
 }
 

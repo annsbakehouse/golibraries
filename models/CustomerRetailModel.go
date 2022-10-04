@@ -104,7 +104,7 @@ type CustomerRetailContactModelPreload struct {
 	PhoneNote3        NullString `gorm:"column:phone_3_note" json:"phone_3_note"`                 //
 	Birthday          NullString `gorm:"column:birthday" json:"birthday"`                         //
 	Gender            int        `gorm:"column:gender" json:"gender"`                             //
-	Active            int        `gorm:"column:acive" json:"active"`                              //
+	Active            int        `gorm:"column:active" json:"active"`                             //
 	Email             NullString `gorm:"column:email" json:"email"`                               //
 	Password          NullString `gorm:"column:password" json:"password"`                         //
 	InternalShortNote NullString `gorm:"column:internal_short_note" json:"internal_short_note"`   //
@@ -172,7 +172,7 @@ type CustomerRetailSaveForm struct {
 	PhoneNote3        string `json:"phone_3_note"`                            //
 	Birthday          string `json:"birthday"`                                //
 	Gender            int    `json:"gender"`                                  //
-	Email             string `json:"email" binding:"required"`                //
+	Email             string `json:"email"`                                   //
 	Active            int    `json:"active"`                                  //
 	InternalShortNote string `json:"internal_short_note"`                     //
 	InternalLongNote  string `json:"internal_long_note"`
@@ -197,7 +197,7 @@ type CustomerRetailUpdatePersonalForm struct {
 	PhoneNote3        string `json:"phone_3_note"`                            //
 	Birthday          string `json:"birthday"`                                //
 	Gender            int    `json:"gender"`                                  //
-	Email             string `json:"email" binding:"required"`                //
+	Email             string `json:"email"`                                   //
 	Active            int    `json:"active"`                                  //
 	InternalShortNote string `json:"internal_short_note"`                     //
 	InternalLongNote  string `json:"internal_long_note"`                      //
@@ -213,10 +213,10 @@ type CustomerRetailUpdateCustomerLevelForm struct {
 
 type CustomerRetailUpdateLoginForm struct {
 	ID                  string `json:"id" binding:"required"`
-	Email               string `json:"email" binding:"required"` //
-	Password            string `json:"password"`                 //
-	AllowLogin          int    `json:"allow_login"`              //
-	NewsletterSubscribe int    `json:"newsletter_subscribe"`     //
-	InternalShortNote   string `json:"internal_short_note"`      //
-	InternalLongNote    string `json:"internal_long_note"`       //
+	Email               string `json:"email"`                //
+	Password            string `json:"password"`             //
+	AllowLogin          int    `json:"allow_login"`          //
+	NewsletterSubscribe int    `json:"newsletter_subscribe"` //
+	InternalShortNote   string `json:"internal_short_note"`  //
+	InternalLongNote    string `json:"internal_long_note"`   //
 }

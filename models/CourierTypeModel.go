@@ -72,3 +72,7 @@ type CourierTypeModelUpdate struct {
 type CourierTypeModelInfo struct {
 	ID string `json:"id" binding:"required"`
 }
+
+type CourierTypeSelectBySubdistrict struct {
+	SubdistrictID string `json:"subdistrict_id" binding:"required"`
+}

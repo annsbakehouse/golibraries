@@ -107,34 +107,34 @@ type CustomerCorporateSaveForm struct {
 }
 
 type CustomerCorporateFormUpdate struct {
-	ID                 string `json:"id" binding:"required"`
-	CustomerRetailID   string `json:"customer_retail_id" binding:"required"`
-	Name               string `json:"name" binding:"required"`                 //
-	AltName            string `json:"alt_name"`                                //
-	PhoneCountryID1    string `json:"phone_1_country_id" binding:"required"`   //
-	PhoneCountryCode1  string `json:"phone_1_country_code" binding:"required"` //
-	Phone1             string `json:"phone_1" binding:"required"`              //
-	PhoneCountryID2    string `json:"phone_2_country_id"`                      //
-	PhoneCountryCode2  string `json:"phone_2_country_code"`                    //
-	Phone2             string `json:"phone_2"`                                 //
-	PhoneNote2         string `json:"phone_2_note"`                            //
-	PhoneCountryID3    string `json:"phone_3_country_id"`                      //
-	PhoneCountryCode3  string `json:"phone_3_country_code"`                    //
-	Phone3             string `json:"phone_3"`                                 //
-	PhoneNote3         string `json:"phone_3_note"`                            //
-	Birthday           string `json:"birthday"`                                //
-	Gender             int    `json:"gender"`                                  //
-	Email              string `json:"email" binding:"required"`                //
-	InternalShortNote  string `json:"internal_short_note"`                     //
-	InternalLongNote   string `json:"internal_long_note"`
-	CustomersLevelID   string `json:"customers_level_id" binding:"required"` //
-	AutoOrderNote      string `json:"auto_order_note"`                       //
-	Active             int    `json:"active"`                                //
-	EmployeeId         string `json:"employee_id"`                           //
-	CoaId              string `json:"coa_id"`                                //
-	MaxAr              string `json:"max_ar"`                                //
-	BillingAddress     string `json:"biling_address"`                        //
-	OverdueLimit       string `json:"overdue_limit"`                         //
-	AccountExecutiveId string `json:"account_executive"`                     //
-	PaymentTypeId      string `json:"payment_type_id"`                       //
+	ID                 string  `json:"id" binding:"required"`
+	CustomerRetailID   string  `json:"customer_retail_id" binding:"required"`
+	Name               string  `json:"name" binding:"required"`                 //
+	AltName            string  `json:"alt_name"`                                //
+	PhoneCountryID1    string  `json:"phone_1_country_id" binding:"required"`   //
+	PhoneCountryCode1  string  `json:"phone_1_country_code" binding:"required"` //
+	Phone1             string  `json:"phone_1" binding:"required"`              //
+	PhoneCountryID2    string  `json:"phone_2_country_id"`                      //
+	PhoneCountryCode2  string  `json:"phone_2_country_code"`                    //
+	Phone2             string  `json:"phone_2"`                                 //
+	PhoneNote2         string  `json:"phone_2_note"`                            //
+	PhoneCountryID3    string  `json:"phone_3_country_id"`                      //
+	PhoneCountryCode3  string  `json:"phone_3_country_code"`                    //
+	Phone3             string  `json:"phone_3"`                                 //
+	PhoneNote3         string  `json:"phone_3_note"`                            //
+	Birthday           string  `json:"birthday"`                                //
+	Gender             int     `json:"gender"`                                  //
+	Email              string  `json:"email" binding:"required"`                //
+	InternalShortNote  string  `json:"internal_short_note"`                     //
+	InternalLongNote   string  `json:"internal_long_note"`
+	CustomersLevelID   string  `json:"customers_level_id" binding:"required"` //
+	AutoOrderNote      string  `json:"auto_order_note"`                       //
+	Active             int     `json:"active"`                                //
+	EmployeeId         string  `json:"employee_id"`                           //
+	CoaId              string  `json:"coa_id"`                                //
+	MaxAr              float32 `json:"max_ar"`                                //
+	BillingAddress     string  `json:"biling_address"`                        //
+	OverdueLimit       int     `json:"overdue_limit"`                         //
+	AccountExecutiveId string  `json:"account_executive_id"`                  //
+	PaymentTypeId      string  `json:"payment_type_id"`                       //
 }

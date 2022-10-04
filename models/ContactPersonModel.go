@@ -26,7 +26,7 @@ type ContactPersonModel struct {
 type ContactPersonFormSave struct {
 	CustomerCorporateId string `json:"customer_corporate_id" binding:"required"`
 	CustomerRetailID    string `json:"customer_retail_id" binding:"required"`
-	DefaultSenderName   string `json:"default_sender_name" binding:"required"`
+	DefaultSenderName   string `json:"default_sender_name"`
 	// PhoneCountryId      string `json:"phone_country_id"`
 	// PhoneCountryCode    string `json:"phone_country_code"`
 	// Phone               string `json:"phone"`
@@ -34,13 +34,13 @@ type ContactPersonFormSave struct {
 }
 
 type ContactPersonPreload struct {
-	ID                        string                            `gorm:"column:id;primary_key" json:"id"`
-	CustomerRetailId          string                            `gorm:"column:customer_retail_id" json:"customer_retail_id"`
-	CustomerCorporateId       string                            `gorm:"column:customer_corporate_id" json:"customer_corporate_id"`
-	DefaultSenderName         NullString                        `gorm:"column:default_sender_name" json:"default_sender_name"`
-	PhoneCountryID            NullString                        `gorm:"column:phone_country_id" json:"phone_country_id"`
-	PhoneCountryCode          NullString                        `gorm:"column:phone_country_code" json:"phone_country_code"`
-	Phone                     NullString                        `gorm:"column:phone" json:"phone"`
+	ID                  string     `gorm:"column:id;primary_key" json:"id"`
+	CustomerRetailId    string     `gorm:"column:customer_retail_id" json:"customer_retail_id"`
+	CustomerCorporateId string     `gorm:"column:customer_corporate_id" json:"customer_corporate_id"`
+	DefaultSenderName   NullString `gorm:"column:default_sender_name" json:"default_sender_name"`
+	// PhoneCountryID            NullString                        `gorm:"column:phone_country_id" json:"phone_country_id"`
+	// PhoneCountryCode          NullString                        `gorm:"column:phone_country_code" json:"phone_country_code"`
+	// Phone                     NullString                        `gorm:"column:phone" json:"phone"`
 	DefaultSenderPhone        NullString                        `gorm:"column:default_sender_phone" json:"default_sender_phone"`
 	Active                    uint64                            `gorm:"column:active" json:"active"`
 	ContactCustomerRetailInfo CustomerRetailContactModelPreload `gorm:"foreignKey:CustomerRetailId;references:ID" json:"contact_customer_retail_info"`
