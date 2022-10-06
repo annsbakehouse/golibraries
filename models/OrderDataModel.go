@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/annsbakehouse/golibraries/library"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +14,6 @@ type OrderDataModel struct {
 	StatusOrder        int        `gorm:"column:status_order" json:"status_order"`                   //
 	ShortCode          string     `gorm:"column:short_code" json:"short_code"`                       //
 	Notes              NullString `gorm:"column:notes" json:"notes"`                                 //
-	OrderDataInfo      NullString `gorm:"column:order_data_info" json:"order_data_info"`             //
 	OnHold             int        `gorm:"column:on_hold" json:"on_hold"`                             //
 	TotalPriceDiscount float64    `gorm:"column:total_price_discount" json:"total_price_discount"`   //
 	TotalPrice         float64    `gorm:"column:total_price" json:"total_price"`                     //
@@ -26,9 +26,9 @@ type OrderDataModel struct {
 	PromoCode          NullString `gorm:"column:promo_code" json:"promo_code"`                       //
 	PromoName          NullString `gorm:"column:promo_name" json:"promo_name"`                       //
 	PromoInfo          NullString `gorm:"column:promo_info" json:"promo_info"`                       //
-	CreatedBy          string     `gorm:"column:created_by" json:"created_by"`                       //
+	CreatedBy          string     `gorm:"column:created_by;default:NULL" json:"created_by"`          //
 	CreatedAt          *time.Time `gorm:"column:created_at" json:"created_at"`                       //
-	UpdatedBy          string     `gorm:"column:updated_by" json:"updated_by"`                       //
+	UpdatedBy          string     `gorm:"column:updated_by;default:NULL" json:"updated_by"`          //
 	UpdatedAt          *time.Time `gorm:"column:updated_at" json:"updated_at"`                       //
 }
 
@@ -39,7 +39,6 @@ type OrderDataModelPreload struct {
 	StatusOrder        int        `gorm:"column:status_order" json:"status_order"`                   //
 	ShortCode          string     `gorm:"column:short_code" json:"short_code"`                       //
 	Notes              NullString `gorm:"column:notes" json:"notes"`                                 //
-	OrderDataInfo      NullString `gorm:"column:order_data_info" json:"order_data_info"`             //
 	OnHold             int        `gorm:"column:on_hold" json:"on_hold"`                             //
 	TotalPriceDiscount float64    `gorm:"column:total_price_discount" json:"total_price_discount"`   //
 	TotalPrice         float64    `gorm:"column:total_price" json:"total_price"`                     //
@@ -63,6 +62,7 @@ func (c *OrderDataModelPreload) TableName() string {
 }
 
 func (c *OrderDataModel) BeforeCreate(tx *gorm.DB) (err error) {
+	c.ShortCode = library.RandStringFromDb(8, tx, "order_data", "short_code")
 	return
 }
 

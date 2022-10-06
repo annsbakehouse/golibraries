@@ -1,9 +1,9 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
+	"github.com/annsbakehouse/golibraries/library"
 	"gorm.io/gorm"
 )
 
@@ -25,9 +25,9 @@ type OrderInvoiceModel struct {
 	ContactMethodID        NullString `gorm:"column:contact_method_id" json:"contact_method_id"`                 //
 	SumGrandTotal          float64    `gorm:"column:sum_grand_total" json:"sum_grand_total"`                     //
 	INC                    int        `gorm:"->;column:inc" json:"inc"`                                          //
-	CreatedBy              string     `gorm:"column:created_by" json:"created_by"`                               //
+	CreatedBy              string     `gorm:"column:created_by;default:null" json:"created_by"`                  //
 	CreatedAt              *time.Time `gorm:"column:created_at" json:"created_at"`                               //
-	UpdatedBy              string     `gorm:"column:updated_by" json:"updated_by"`                               //
+	UpdatedBy              string     `gorm:"column:updated_by;default:null" json:"updated_by"`                  //
 	UpdatedAt              *time.Time `gorm:"column:updated_at" json:"updated_at"`                               //
 }
 
@@ -60,10 +60,10 @@ func (c *OrderInvoiceModelPreload) TableName() string {
 }
 
 func (c *OrderInvoiceModel) BeforeCreate(tx *gorm.DB) (err error) {
+	c.ShortCode = NullStringInput(library.RandStringFromDb(8, tx, "order_invoice", "short_code"))
 	return
 }
 func (c *OrderInvoiceModel) AfterCreate(tx *gorm.DB) (err error) {
-	fmt.Println(c)
 	return
 }
 func (c *OrderInvoiceModel) BeforeUpdate(tx *gorm.DB) (err error) {

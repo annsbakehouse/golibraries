@@ -31,7 +31,7 @@ type ProductModelPreload struct {
 	// DeletedAt     soft_delete.DeletedAt      `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 	ModelData                  []ProductModelDataPreload            `gorm:"foreignKey:ProductId;references:ID" json:"model_data"`
 	ProductImage               []ProductImageModelPreload           `gorm:"foreignKey:ProductID;references:ID" json:"product_image"`
-	ProductPlarformDisplay     []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductID;references:ID" json:"product_platform"`
+	ProductPlatformDisplay     []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductID;references:ID" json:"product_platform"`
 	ProductDisplayName         []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"product_display_name"`
 	ContentDisplay             []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"content_display"`
 	MktProductContentAccordion []MKTProductAccordionModelPreload    `gorm:"foreignKey:ProductID;references:ID" json:"product_content_accordion"`

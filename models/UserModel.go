@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 
 	//"database/sql"
-	"fmt"
 
 	"github.com/annsbakehouse/golibraries/library"
 	"github.com/google/uuid"
@@ -21,6 +20,7 @@ type UserModel struct {
 	Email     NullString `gorm:"column:email" json:"email"`                   //
 	Active    int        `gorm:"column:active" json:"active"`                 //
 	Qr        NullString `gorm:"column:qr" json:"qr"`                         //
+	INC       int        `gorm:"column:inc" json:"inc"`                       //
 	CreatedBy NullString `gorm:"column:created_by" json:"created_by"`         //
 	CreatedAt time.Time  `gorm:"column:created_at" json:"created_on"`         //
 	UpdatedBy NullString `gorm:"column:updated_by" json:"updated_by"`         //
@@ -53,9 +53,9 @@ func UserModelQR(data string, id string) string {
 func (u *UserModel) BeforeCreate(tx *gorm.DB) (err error) {
 	_, dbReader, _ := DbConnect()
 	var sequence int
-	dbReader.Raw("SELECT last_value FROM user_inc_seq").Scan(&sequence)
-	genericUID := library.GenUID(sequence+1, 2, 2)
-	u.UID = NullStringInput(fmt.Sprintf("%v", genericUID))
+	dbReader.Raw("SELECT last_value FROM user_inc_n_seq").Scan(&sequence)
+	genericUID := library.GenUID(sequence+1, 3, 3)
+	u.UID = NullStringInput(genericUID)
 	u.Qr = NullStringInput(UserModelQR(u.Qr.String, ""))
 	return nil
 }

@@ -45,7 +45,7 @@ type ProductModelDataPreload struct {
 	DeliveryInfo                    ProductModelDeliveryPreload          `gorm:"foreignKey:ProductModelDataID;references:ID" json:"delivery_info"`
 	ModelWarehouseInfoW4W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w4w2"`
 	ModelWarehouseInfoW3W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w3w2"`
-	ProductPlarformDisplay          []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_platform"`
+	ProductPlatformDisplay          []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_platform"`
 	ContentDisplay                  []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"content_model_display"`
 	MktProductModelContentAccordion []MKTProductAccordionModelPreload    `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_content_accordion"`
 	ProductDataLibrariesinfo        []ProductDataLibrariesModelPreload   `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_library"`

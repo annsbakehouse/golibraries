@@ -26,7 +26,7 @@ type ProductModelModelPreload struct {
 	ProductTypeId          NullString                           `gorm:"column:product_type_id" json:"product_type_id"`
 	Active                 int                                  `gorm:"column:active" json:"active"`
 	ProductType            ProductTypeModel                     `gorm:"foreignKey:ID;references:ProductTypeId" json:"product_type"`
-	ProductPlarformDisplay []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelID;references:ID" json:"product_platform"`
+	ProductPlatformDisplay []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelID;references:ID" json:"product_platform"`
 	// DeletedAt soft_delete.DeletedAt `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 }
 

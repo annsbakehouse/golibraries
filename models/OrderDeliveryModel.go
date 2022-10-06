@@ -7,23 +7,23 @@ import (
 )
 
 type OrderDeliveryModel struct {
-	ID                string     `gorm:"column:id;primary_key" json:"id"`                       //
-	OrderInvoiceID    string     `gorm:"column:order_invoice_id" json:"order_invoice_id"`       //
-	OrderDataID       string     `gorm:"column:order_data_id" json:"order_data_id"`             //
-	CourierTypeID     string     `gorm:"column:courier_type_id" json:"courier_type_id"`         //
-	CustomerAddressID string     `gorm:"column:customer_address_id" json:"customer_address_id"` //
-	CourierName       string     `gorm:"column:courier_name" json:"courier_name"`               //
-	DeliveryDate      NullString `gorm:"column:delivery_date" json:"delivery_date"`             //
-	DeliveryStart     NullString `gorm:"column:delivery_start" json:"delivery_start"`           //
-	DeliveryEnd       NullString `gorm:"column:delivery_end" json:"delivery_end"`               //
-	SenderName        NullString `gorm:"column:sender_name" json:"sender_name"`                 //
-	SenderPhone       NullString `gorm:"column:sender_phone" json:"sender_phone"`               //
-	StatusDelivery    int        `gorm:"column:status_delivery" json:"status_delivery"`         //
-	CourierSubtypeID  string     `gorm:"column:courier_subtype_id" json:"courier_subtype_id"`   //
-	CreatedBy         string     `gorm:"column:created_by" json:"created_by"`                   //
-	CreatedAt         *time.Time `gorm:"column:created_at" json:"created_at"`                   //
-	UpdatedBy         string     `gorm:"column:updated_by" json:"updated_by"`                   //
-	UpdatedAt         *time.Time `gorm:"column:updated_at" json:"updated_at"`                   //
+	ID                string     `gorm:"column:id;primary_key" json:"id"`                                    //
+	OrderInvoiceID    string     `gorm:"column:order_invoice_id" json:"order_invoice_id"`                    //
+	OrderDataID       string     `gorm:"column:order_data_id" json:"order_data_id"`                          //
+	CourierTypeID     string     `gorm:"column:courier_type_id" json:"courier_type_id"`                      //
+	CustomerAddressID string     `gorm:"column:customer_address_id;default:NULL" json:"customer_address_id"` //
+	CourierName       string     `gorm:"column:courier_name" json:"courier_name"`                            //
+	DeliveryDate      NullString `gorm:"column:delivery_date" json:"delivery_date"`                          //
+	DeliveryStart     NullString `gorm:"column:delivery_start" json:"delivery_start"`                        //
+	DeliveryEnd       NullString `gorm:"column:delivery_end" json:"delivery_end"`                            //
+	SenderName        NullString `gorm:"column:sender_name" json:"sender_name"`                              //
+	SenderPhone       NullString `gorm:"column:sender_phone" json:"sender_phone"`                            //
+	StatusDelivery    int        `gorm:"column:status_delivery" json:"status_delivery"`                      //
+	CourierSubtypeID  string     `gorm:"column:courier_subtype_id" json:"courier_subtype_id"`                //
+	CreatedBy         string     `gorm:"column:created_by" json:"created_by"`                                //
+	CreatedAt         *time.Time `gorm:"column:created_at" json:"created_at"`                                //
+	UpdatedBy         string     `gorm:"column:updated_by" json:"updated_by"`                                //
+	UpdatedAt         *time.Time `gorm:"column:updated_at" json:"updated_at"`                                //
 }
 
 type OrderDeliveryModelPreload struct {
