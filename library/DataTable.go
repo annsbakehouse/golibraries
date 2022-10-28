@@ -25,6 +25,7 @@ type DataTableConfig struct {
 	Table      string
 	Connection *gorm.DB
 	Request    map[string]interface{}
+	TableCount string
 }
 type DataTableOutput struct {
 	Draw            int         `json:"draw"`
@@ -82,18 +83,28 @@ func DataTable(Config DataTableConfig) (interface{}, error) {
 		}
 	}
 	queryBuilder = queryBuilder + orderDefault + dtOrder
+
 	//end building order
 	total := 0
-	readCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.Table + " " + whereDefault + " " + defaultGroup).Scan(&total)
-	if readCount.RowsAffected > 1 {
-		dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT(" + Config.Primary + ") as total FROM " + Config.Table + " " + whereDefault + " " + defaultGroup + ") as a").Scan(&total)
+	if len(Config.TableCount) > 0 {
+		readCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.TableCount + " " + whereDefault + " " + defaultGroup + " LIMIT 2").Scan(&total)
+		if readCount.RowsAffected > 1 {
+			dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT(" + Config.Primary + ") as total FROM " + Config.TableCount + " " + whereDefault + " " + defaultGroup + ") as a").Scan(&total)
+		}
+	} else {
+		readCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.Table + " " + whereDefault + " " + defaultGroup + " LIMIT 2").Scan(&total)
+		if readCount.RowsAffected > 1 {
+			dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT(" + Config.Primary + ") as total FROM " + Config.Table + " " + whereDefault + " " + defaultGroup + ") as a").Scan(&total)
+		}
+		fmt.Println(readCount.RowsAffected)
 	}
+	fmt.Println(total)
 
-	filteredtotal := 0
-	filteredCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.Table + " " + whereDefault + dtWhere + " " + defaultGroup).Scan(&filteredtotal)
-	if filteredCount.RowsAffected > 1 {
-		dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT(" + Config.Primary + ") as total FROM " + Config.Table + " " + whereDefault + dtWhere + " " + defaultGroup + ") as a").Scan(&filteredtotal)
-	}
+	filteredtotal := total
+	// filteredCount := dbReader.Raw("SELECT COUNT(" + Config.Primary + ") FROM " + Config.Table + " " + whereDefault + dtWhere + " " + defaultGroup).Scan(&filteredtotal)
+	// if filteredCount.RowsAffected > 1 {
+	// 	dbReader.Raw("SELECT SUM(a.total) FROM (SELECT COUNT(" + Config.Primary + ") as total FROM " + Config.Table + " " + whereDefault + dtWhere + " " + defaultGroup + ") as a").Scan(&filteredtotal)
+	// }
 
 	//limit builder
 	queryBuilder = queryBuilder + DTGeneratorLimit(Config.Request)

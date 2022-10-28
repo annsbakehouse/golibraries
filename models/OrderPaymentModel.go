@@ -7,23 +7,23 @@ import (
 )
 
 type OrderPaymentModel struct {
-	ID             string     `gorm:"column:id;primary_key" json:"id"`                 //
-	OrderInvoiceID NullString `gorm:"column:order_invoice_id" json:"order_invoice_id"` //
-	PaymentTypeID  NullString `gorm:"column:payment_type_id" json:"payment_type_id"`   //
-	PaymentType    NullString `gorm:"column:payment_type" json:"payment_type"`         //
-	PaymentDate    NullString `gorm:"column:payment_date" json:"payment_date"`         //
-	Value          float64    `gorm:"column:value" json:"value"`                       //
-	Status         int        `gorm:"column:status" json:"status"`                     //
-	Note           NullString `gorm:"column:note" json:"note"`                         //
-	PaidOn         NullString `gorm:"column:paid_on" json:"paid_on"`                   //
-	MidtransID     NullString `gorm:"column:midtrans_id" json:"midtrans_id"`           //
-	MidtransInfo   NullString `gorm:"column:midtrans_info" json:"midtrans_info"`       //
-	MidtransStatus int        `gorm:"column:midtrans_status" json:"midtrans_status"`   //
-	MaxTimePay     *time.Time `gorm:"column:max_time_pay" json:"max_time_pay"`         //
-	CreatedBy      string     `gorm:"column:created_by" json:"created_by"`             //
-	CreatedAt      *time.Time `gorm:"column:created_at" json:"created_at"`             //
-	UpdatedBy      string     `gorm:"column:updated_by" json:"updated_by"`             //
-	UpdatedAt      *time.Time `gorm:"column:updated_at" json:"updated_at"`             //
+	ID             string     `gorm:"column:id;primary_key" json:"id"`                   //
+	OrderInvoiceID NullString `gorm:"column:order_invoice_id" json:"order_invoice_id"`   //
+	PaymentTypeID  NullString `gorm:"column:payment_type_id" json:"payment_type_id"`     //
+	PaymentType    NullString `gorm:"column:payment_type" json:"payment_type"`           //
+	PaymentDate    NullString `gorm:"column:payment_date" json:"payment_date"`           //
+	Value          float64    `gorm:"column:value" json:"value"`                         //
+	Status         int        `gorm:"column:status" json:"status"`                       //
+	Note           NullString `gorm:"column:note" json:"note"`                           //
+	PaidOn         NullString `gorm:"column:paid_on" json:"paid_on"`                     //
+	PaymentID      NullString `gorm:"column:payment_id" json:"payment_id"`               //
+	PaymentInfo    NullString `gorm:"column:payment_info" json:"payment_info"`           //
+	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`       //
+	MaxTimePay     string     `gorm:"column:max_time_pay" json:"max_time_pay"`           //
+	CreatedBy      string     `gorm:"column:created_by;default:null;" json:"created_by"` //
+	CreatedAt      *time.Time `gorm:"column:created_at" json:"created_at"`               //
+	UpdatedBy      string     `gorm:"column:updated_by;default:null;" json:"updated_by"` //
+	UpdatedAt      *time.Time `gorm:"column:updated_at" json:"updated_at"`               //
 }
 
 type OrderPaymentModelPreload struct {
@@ -36,9 +36,9 @@ type OrderPaymentModelPreload struct {
 	Status         int        `gorm:"column:status" json:"status"`                     //
 	Note           NullString `gorm:"column:note" json:"note"`                         //
 	PaidOn         NullString `gorm:"column:paid_on" json:"paid_on"`                   //
-	MidtransID     NullString `gorm:"column:midtrans_id" json:"midtrans_id"`           //
-	MidtransInfo   NullString `gorm:"column:midtrans_info" json:"midtrans_info"`       //
-	MidtransStatus int        `gorm:"column:midtrans_status" json:"midtrans_status"`   //
+	PaymentID      NullString `gorm:"column:payment_id" json:"payment_id"`             //
+	PaymentInfo    NullString `gorm:"column:payment_info" json:"payment_info"`         //
+	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`     //
 	MaxTimePay     *time.Time `gorm:"column:max_time_pay" json:"max_time_pay"`         //
 }
 

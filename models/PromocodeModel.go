@@ -22,7 +22,7 @@ type PromocodeModel struct {
 
 // TableName sets the insert table name for this struct type
 func (r *PromocodeModel) TableName() string {
-	return "religion"
+	return "promo_code"
 }
 
 func (r *PromocodeModel) BeforeCreate(tx *gorm.DB) (err error) {

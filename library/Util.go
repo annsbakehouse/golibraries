@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"reflect"
 	"strings"
 	"time"
 
@@ -118,8 +119,8 @@ func FileExists(name string) (bool, error) {
 func GenUID(sequence int, lengthNumber int, charMaxLenght int) string {
 	stringSequence := fmt.Sprintf("%v", sequence)
 	if len(stringSequence) > lengthNumber {
-		prefix := stringSequence[0 : len(stringSequence)-charMaxLenght]
-		suffix := stringSequence[len(stringSequence)-charMaxLenght : len(stringSequence)]
+		prefix := stringSequence[0 : len(stringSequence)-lengthNumber]
+		suffix := stringSequence[len(stringSequence)-lengthNumber : len(stringSequence)]
 		numIn, _ := strconv.Atoi(prefix)
 		output := GenUIDToAlpha(numIn, "", charMaxLenght)
 		if len(output) < charMaxLenght {
@@ -132,6 +133,7 @@ func GenUID(sequence int, lengthNumber int, charMaxLenght int) string {
 		}
 		return output + suffix
 	} else {
+
 		if len(stringSequence) < lengthNumber {
 			i := 0
 			ln := len(stringSequence)
@@ -151,8 +153,8 @@ func GenUID(sequence int, lengthNumber int, charMaxLenght int) string {
 	return ""
 }
 func GenUIDToAlpha(num int, addString string, ln int) string {
-	if num <= 26 {
-		return string('A'-1+num) + addString
+	if num < 26 {
+		return string('A'+num) + addString
 	} else {
 		if len(addString) >= ln {
 			return addString + fmt.Sprintf("%v", num)
@@ -256,7 +258,7 @@ func RandStringFromDb(n int, db *gorm.DB, table string, cols string) string {
 		}
 	}
 	result := map[string]interface{}{}
-	rs := db.Table(table).Select(cols).Where(cols+"=?", string(b)).First(result)
+	rs := db.Table(table).Select(cols).Where(cols+"=?", string(b)).Scan(result)
 	if rs.RowsAffected == 0 {
 		return string(b)
 	}
@@ -282,4 +284,73 @@ func EmailCheck(email string) bool {
 func GenerateQRCode(data string, savepath string, size int) error {
 	err := qrcode.WriteFile(data, qrcode.Medium, size, savepath)
 	return err
+}
+
+func InArray(val interface{}, array interface{}) (index int) {
+	values := reflect.ValueOf(array)
+
+	if reflect.TypeOf(array).Kind() == reflect.Slice || values.Len() > 0 {
+		for i := 0; i < values.Len(); i++ {
+			if reflect.DeepEqual(val, values.Index(i).Interface()) {
+				return i
+			}
+		}
+	}
+
+	return -1
+}
+func PackagingStatusLabel(status int) string {
+	if status == 0 {
+		return "MX"
+	} else if status == 1 {
+		return "M1"
+	} else if status == 2 {
+		return "M2"
+	} else if status == 3 {
+		return "M3"
+	} else if status == 4 {
+		return "M3B"
+	} else if status == 5 {
+		return "M4"
+	} else if status == 6 {
+		return "T1"
+	} else if status == 7 {
+		return "T2"
+	} else if status == 8 {
+		return "M5"
+	} else if status == 9 {
+		return "M6"
+	} else if status == 10 {
+		return "M7"
+	} else if status == 11 {
+		return "M8A"
+	} else if status == 12 {
+		return "M8B"
+	} else if status == 13 {
+		return "M8C"
+	} else if status == 14 {
+		return "M8X"
+	} else if status == 50 {
+		return "M9"
+	}
+	return ""
+}
+func GetPackagingStatusMinimum(status []string) string {
+	allowed := []string{"M1", "M2", "M3", "M3B", "M4", "T1", "T2", "M5", "M6", "M7", "M8A", "M8B", "M8C", "M8X", "M9", "MX"}
+	min := 0
+	for k, v := range allowed {
+		for _, vv := range status {
+			if v == vv {
+				if min == 0 {
+					min = k
+				} else if min > k {
+					min = k
+				}
+			}
+		}
+	}
+	return fmt.Sprintf("%v", min)
+}
+func GetPackagingStatusMinimumQuery(status []string, tx *gorm.DB) string {
+	return ""
 }

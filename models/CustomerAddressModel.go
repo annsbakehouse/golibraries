@@ -23,7 +23,7 @@ type CustomerAddressModel struct {
 	ReceiverName           NullString `gorm:"column:receiver_name" json:"receiver_name"`                         //
 	ReceiverPhone          NullString `gorm:"column:receiver_phone" json:"receiver_phone"`                       //
 	ReceiverPhoneCountryID string     `gorm:"column:receiver_phone_country_id" json:"receiver_phone_country_id"` //
-	CreatedBy              NullString `gorm:"column:created_by" json:"created_by"`                               //
+	CreatedBy              NullString `gorm:"column:created_by;default:NULL" json:"created_by"`                  //
 	CreatedAt              time.Time  `gorm:"column:created_at" json:"created_at"`                               //
 	UpdatedBy              NullString `gorm:"column:updated_by" json:"updated_by"`                               //
 	UpdatedAt              time.Time  `gorm:"column:updated_at" json:"updated_at"`                               //
@@ -79,6 +79,10 @@ func (c *CustomerAddressModel) BeforeDelete(tx *gorm.DB) (err error) {
 
 type CustomerAddressModelInfoForm struct {
 	ID string `json:"id" binding:"required"`
+}
+type CustomerAddressModelInfoCustForm struct {
+	ID         string `json:"id" binding:"required"`
+	CustomerID string `json:"customer_id" binding:"required"`
 }
 type CustomerAddressByCustomerModelInfoForm struct {
 	ID string `json:"customer_id" binding:"required"`

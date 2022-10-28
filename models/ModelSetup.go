@@ -30,6 +30,8 @@ var DbConnection *gorm.DB
 
 // 	return dbMaster,nil
 // }
+var OpenDB *gorm.DB
+
 func DbConnect() (*sql.DB, *gorm.DB, error) {
 	//mysql connection
 	configDbMaster := os.Getenv("masterDsn")
@@ -44,12 +46,13 @@ func DbConnect() (*sql.DB, *gorm.DB, error) {
 	if err != nil {
 		return nil, nil, fmt.Errorf("Master Database Connection Error")
 	}
-	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxIdleConns(100)
 	// SetMaxOpenConns sets the maximum number of open connections to the database.
-	sqlDB.SetMaxOpenConns(10)
+	sqlDB.SetMaxOpenConns(100)
 	// SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
 	sqlDB.SetConnMaxLifetime(2 * time.Minute)
 	fmt.Println(sqlDB.Stats())
+	OpenDB = dbMaster
 	return sqlDB, dbMaster, nil
 	//dbMaster := DbConnection
 	//dbMaster := dbConnection

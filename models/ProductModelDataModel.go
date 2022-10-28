@@ -43,12 +43,14 @@ type ProductModelDataPreload struct {
 	ProductModelImage               []ProductModelImageModelPreload      `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_image"`
 	InventoryRecipeInfo             InventoryRecipeModelPreload          `gorm:"foreignKey:InventoryRecipeId;references:ID" json:"inventory_recipe_info"`
 	DeliveryInfo                    ProductModelDeliveryPreload          `gorm:"foreignKey:ProductModelDataID;references:ID" json:"delivery_info"`
+	DeliveryInfoAadd                []ProductModelDeliveryPreload        `gorm:"foreignKey:ProductModelDataID;references:ID" json:"delivery_info_add"`
 	ModelWarehouseInfoW4W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w4w2"`
 	ModelWarehouseInfoW3W2          []ProductModelWarehouseModelPreload  `gorm:"foreignKey:ProductModelDataID;references:ID" json:"warehouse_info_w3w2"`
 	ProductPlatformDisplay          []ProductPlatformDisplayModelPreload `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_platform"`
 	ContentDisplay                  []LanguageTableModelPreload          `gorm:"foreignKey:TableTargetID;references:ID" json:"content_model_display"`
 	MktProductModelContentAccordion []MKTProductAccordionModelPreload    `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_content_accordion"`
 	ProductDataLibrariesinfo        []ProductDataLibrariesModelPreload   `gorm:"foreignKey:ProductModelDataID;references:ID" json:"product_model_library"`
+	ProductInfo                     ProductModelPreload                  `gorm:"foreignKey:ID;references:ProductId" json:"product_info"`
 }
 
 // TableName sets the insert table name for this struct type
