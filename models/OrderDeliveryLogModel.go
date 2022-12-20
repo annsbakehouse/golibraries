@@ -45,8 +45,23 @@ func (c *OrderDeliveryLogModelPreload) TableName() string {
 func (c *OrderDeliveryLogModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
+func (c *OrderDeliveryLogModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderDeliveryLogModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_delivery_log", m)
+	return
+}
 
 func (c *OrderDeliveryLogModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	return
+}
+
+func (c *OrderDeliveryLogModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderDeliveryLogModel
+	// tx.Raw("SELECT * FROM order_delivery_log ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_delivery_log", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
 	return
 }
 

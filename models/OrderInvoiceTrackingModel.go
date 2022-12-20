@@ -37,8 +37,22 @@ func (c *OrderInvoiceTrackingModelPreload) TableName() string {
 func (c *OrderInvoiceTrackingModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
+func (c *OrderInvoiceTrackingModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderInvoiceTrackingModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_invoice_tracking", m)
+	return
+}
 
 func (c *OrderInvoiceTrackingModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	return
+}
+func (c *OrderInvoiceTrackingModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderInvoiceTrackingModel
+	// tx.Raw("SELECT * FROM order_invoice_tracking ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_invoice_tracking", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
 	return
 }
 

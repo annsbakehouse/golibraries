@@ -23,7 +23,7 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-//getting token to claims
+// getting token to claims
 func ExtractTokenID(c *gin.Context) (map[string]interface{}, error) {
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -42,7 +42,7 @@ func ExtractTokenID(c *gin.Context) (map[string]interface{}, error) {
 	return nil, nil
 }
 
-//token validation
+// token validation
 func TokenValid(c *gin.Context) {
 	tokenString := ExtractToken(c)
 	_, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -75,7 +75,7 @@ func TokenValid(c *gin.Context) {
 	}
 }
 
-//generate token jwt
+// generate token jwt
 func TokenGenerator(data interface{}) (string, error) {
 	tokenLifeTime, err := strconv.Atoi(os.Getenv("jwtTTL"))
 	jsonString, err := library.JsonEncode(data)
@@ -85,8 +85,9 @@ func TokenGenerator(data interface{}) (string, error) {
 			claims := jwt.MapClaims{}
 			claims["authorized"] = true
 			claims["exp"] = time.Now().Add(time.Hour * time.Duration(tokenLifeTime)).Unix()
-			fmt.Println(claims["exp"])
+			//claims["exp"] = time.Now().Add(time.Second * time.Duration(tokenLifeTime)).Unix()
 			claims["exp_time"] = time.Now().Add(time.Hour * time.Duration(tokenLifeTime))
+			//claims["exp_time"] = time.Now().Add(time.Second * time.Duration(tokenLifeTime))
 			for k, v := range dataInterface {
 				claims[k] = v
 			}
@@ -102,7 +103,7 @@ func TokenGenerator(data interface{}) (string, error) {
 	return "", err
 }
 
-//getting token to map
+// getting token to map
 func ExtractTokenToMap(c string) (map[string]interface{}, error) {
 	tokenString := c
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

@@ -13,6 +13,7 @@ type ProductPricingModel struct {
 	Active             int        `gorm:"column:active" json:"active"`
 	INC                int        `gorm:"column:inc" json:"inc"`
 	Price              int        `gorm:"column:price" json:"price"`
+	PriceFake          int        `gorm:"column:price_fake;default:0" json:"price_fake"`
 	CreatedBy          NullString `gorm:"column:created_by" json:"created_by"`
 	CreatedAt          time.Time  `gorm:"column:created_at" json:"crated_at"`
 	UpdatedBy          NullString `gorm:"column:updated_by" json:"updated_by"`
@@ -28,6 +29,7 @@ type ProductPricingModelPreload struct {
 	Active             int     `gorm:"column:active" json:"active"`
 	INC                int     `gorm:"column:inc" json:"inc"`
 	Price              float64 `gorm:"column:price" json:"price"`
+	PriceFake          float64 `gorm:"column:price_fake;default:0" json:"price_fake"`
 	// DeletedAt          soft_delete.DeletedAt    `gorm:"uniqueIndex:udx_name;column:deleted_at" json:"-"`
 	CustomerLevel CustomerLevelModelInfo `gorm:"foreignKey:ID;references:CustomerLevelID" json:"customer_level"`
 }
@@ -54,19 +56,23 @@ func (p *ProductPricingModel) BeforeDelete(tx *gorm.DB) (err error) {
 	return
 }
 
-//strcture input
+// strcture input
 type ProductPricingModelInput struct {
 	CustomerLevelID    map[string][]string `json:"customer_level_id"`
 	ProductModelDataID []string            `json:"product_model_data_id" binding:"required"`
 	Price              map[string][]int    `json:"price"`
+	PriceFake          map[string][]int    `json:"price_fake"`
 }
+
 type ProductPricingModelUpdate struct {
 	ID                 string `json:"id" binding:"required"`
 	CustomerLevelID    string `json:"customer_level_id" binding:"required"`
 	ProductModelDataID string `json:"product_model_data_id" binding:"required"`
 	Active             int    `json:"active"`
 	Price              int    `json:"price"`
+	PriceFake          int    `json:"price_fake"`
 }
+
 type ProductPricingModellInfo struct {
 	ID string `json:"id" binding:"required"`
 }

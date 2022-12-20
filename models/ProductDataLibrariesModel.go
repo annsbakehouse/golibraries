@@ -56,7 +56,7 @@ func (p *ProductDataLibrariesModel) AfterUpdate(tx *gorm.DB) (err error) {
 	return
 }
 
-//strcture input
+// strcture input
 type ProductDataLibrariesModelInput struct {
 	ProductModelDataID         string `json:"product_model_data_id"`
 	ProductLibraryID           string `json:"product_library_id" binding:"required"`

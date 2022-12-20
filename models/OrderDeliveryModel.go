@@ -22,6 +22,12 @@ type OrderDeliveryModel struct {
 	OrderDeliveryInfo string     `gorm:"column:order_delivery_info;default:null" json:"order_delivery_info"`
 	DeliveryTimeID    string     `gorm:"delivery_time_id" json:"delivery_time_id"`
 	WarehouseID       NullString `gorm:"warehouse_id" json:"warehouse_id"`
+	AssignedCourier   NullString `gorm:"assigned_courier" json:"assigned_courier"`
+	CourierRemark     NullString `gorm:"courier_remark" json:"courier_remark"`
+	DeliveryTime      NullString `gorm:"delivery_time" json:"delivery_time"`
+	DeliveryNote      NullString `gorm:"delivery_note" json:"delivery_note"`
+	DeliveryDateReal  NullString `gorm:"delivery_date_real" json:"delivery_date_real"`
+	Images            NullString `gorm:"images" json:"images"`
 	CreatedBy         string     `gorm:"column:created_by;default:null;" json:"created_by"` //
 	CreatedAt         *time.Time `gorm:"column:created_at" json:"created_at"`               //
 	UpdatedBy         string     `gorm:"column:updated_by;default:null;" json:"updated_by"` //
@@ -44,6 +50,12 @@ type OrderDeliveryModelPreload struct {
 	OrderDeliveryInfo string     `gorm:"order_delivery_info" json:"order_delivery_info"`
 	DeliveryTimeID    string     `gorm:"delivery_time_id" json:"delivery_time_id"`
 	WarehouseID       NullString `gorm:"warehouse_id" json:"warehouse_id"`
+	AssignedCourier   NullString `gorm:"assigned_courier" json:"assigned_courier"`
+	CourierRemark     NullString `gorm:"courier_remark" json:"courier_remark"`
+	DeliveryTime      NullString `gorm:"delivery_time" json:"delivery_time"`
+	DeliveryNote      NullString `gorm:"delivery_note" json:"delivery_note"`
+	DeliveryDateReal  NullString `gorm:"delivery_date_real" json:"delivery_date_real"`
+	Images            NullString `gorm:"images" json:"images"`
 }
 
 // TableName sets the insert table name for this struct type
@@ -57,8 +69,21 @@ func (c *OrderDeliveryModelPreload) TableName() string {
 func (c *OrderDeliveryModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
-
+func (c *OrderDeliveryModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderDeliveryModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_delivery", m)
+	return
+}
 func (c *OrderDeliveryModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	return
+}
+func (c *OrderDeliveryModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderDeliveryModel
+	// tx.Raw("SELECT * FROM order_delivery ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_delivery", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
 	return
 }
 

@@ -42,10 +42,25 @@ func (c *OrderPackageModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 
+func (c *OrderPackageModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderPackageModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_package", m)
+	return
+}
+
 func (c *OrderPackageModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
 
+func (c *OrderPackageModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderPackageModel
+	// tx.Raw("SELECT * FROM order_package ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_package", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
+	return
+}
 func (c *OrderPackageModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model CustomerRetailModel
 	// tx.Model(&model).Where("id=?", c.ID).Update("deleted_by", ActiveUser)

@@ -76,11 +76,25 @@ func (c *OrderProductModelPreload) TableName() string {
 func (c *OrderProductModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
+func (c *OrderProductModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderProductModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_product", m)
+	return
+}
 
 func (c *OrderProductModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
 
+func (c *OrderProductModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderProductModel
+	// tx.Raw("SELECT * FROM order_product ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_product", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
+	return
+}
 func (c *OrderProductModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model CustomerRetailModel
 	// tx.Model(&model).Where("id=?", c.ID).Update("deleted_by", ActiveUser)

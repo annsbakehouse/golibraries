@@ -51,7 +51,7 @@ func (p *ProductLibraryNameModel) BeforeDelete(tx *gorm.DB) (err error) {
 	return
 }
 
-//strcture input
+// strcture input
 type ProductLibraryNameInput struct {
 	Name        string `json:"name" binding:"required"`
 	SystemName  string `json:"system_name" binding:"required"`

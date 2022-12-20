@@ -74,15 +74,34 @@ func (c *OrderInvoiceModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
 func (c *OrderInvoiceModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderInvoiceModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_invoice", m)
 	return
 }
 func (c *OrderInvoiceModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
-
+func (c *OrderInvoiceModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderInvoiceModel
+	// tx.Raw("SELECT * FROM order_invoice ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_invoice", fmt.Sprintf("id=='%v'", v.ID), v)
+	// }
+	return
+}
 func (c *OrderInvoiceModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model CustomerRetailModel
 	// tx.Model(&model).Where("id=?", c.ID).Update("deleted_by", ActiveUser)
+	return
+}
+
+func (c *OrderInvoiceModel) AfterDelete(tx *gorm.DB) (err error) {
+	// var m OrderInvoiceModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbRemove("order_invoice", fmt.Sprintf("u.id=='%v'", c.ID), nil)
+	// var mRelate OrderDataModel
+	// tx.Where("order_invoice_id=?", c.ID).Delete(&mRelate)
 	return
 }
 

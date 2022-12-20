@@ -164,20 +164,20 @@ func GenUIDToAlpha(num int, addString string, ln int) string {
 	}
 }
 
-//json encode
+// json encode
 func JsonEncode(data interface{}) (string, error) {
 	jsons, err := json.Marshal(data)
 	return string(jsons), err
 }
 
-//json decode
+// json decode
 func JsonDecode(data string) (map[string]interface{}, error) {
 	var dat map[string]interface{}
 	json.Unmarshal([]byte(data), &dat)
 	return dat, nil
 }
 
-//parse json requst Body
+// parse json requst Body
 func JsonReqBody(c *gin.Context) (map[string]interface{}, error) {
 	body := c.Request.Body
 	value, err := ioutil.ReadAll(body)
@@ -264,6 +264,22 @@ func RandStringFromDb(n int, db *gorm.DB, table string, cols string) string {
 	}
 	return RandStringFromDb(n, db, table, cols)
 }
+func RandString(n int) string {
+
+	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+	const (
+		letterIdxBits = 6                    // 6 bits to represent a letter index
+		letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+	)
+	b := make([]byte, n)
+	for i := 0; i < n; {
+		if idx := int(rand.Int63() & letterIdxMask); idx < len(letterBytes) {
+			b[i] = letterBytes[idx]
+			i++
+		}
+	}
+	return string(b)
+}
 
 func GetBreadCrumb(mode int, url string, db *gorm.DB) {
 	//code
@@ -272,10 +288,13 @@ func GetBreadCrumb(mode int, url string, db *gorm.DB) {
 }
 func EmailCheck(email string) bool {
 	errFormat := EmailCheckerValidateFormat(email)
-	errMX := EmailCheckerValidateMX(email)
-	errHost := EmailCheckerValidateHost(email)
+	// errMX := EmailCheckerValidateMX(email)
+	// errHost := EmailCheckerValidateHost(email)
 
-	if errFormat != nil || errMX != nil || errHost != nil {
+	// if errFormat != nil || errMX != nil || errHost != nil {
+	// 	return false
+	// }
+	if errFormat != nil {
 		return false
 	}
 	return true

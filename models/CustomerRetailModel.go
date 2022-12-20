@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -26,7 +27,8 @@ type CustomerRetailModel struct {
 	PhoneNote3          NullString `gorm:"column:phone_3_note" json:"phone_3_note"`                 //
 	Birthday            NullString `gorm:"column:birthday" json:"birthday"`                         //
 	Gender              int        `gorm:"column:gender" json:"gender"`                             //
-	Email               NullString `gorm:"column:email" json:"email"`                               //
+	Email               NullString `gorm:"column:email;unique" json:"email"`                        //
+	ValidEmail          NullString `gorm:"column:valid_email;unique;not null" json:"valid_email"`   //
 	Password            NullString `gorm:"column:password" json:"password"`                         //
 	InternalShortNote   NullString `gorm:"column:internal_short_note" json:"internal_short_note"`   //
 	InternalLongNote    NullString `gorm:"column:internal_long_note" json:"internal_long_note"`     //
@@ -66,7 +68,8 @@ type CustomerRetailModelPreload struct {
 	PhoneNote3          NullString             `gorm:"column:phone_3_note" json:"phone_3_note"`                 //
 	Birthday            NullString             `gorm:"column:birthday" json:"birthday"`                         //
 	Gender              int                    `gorm:"column:gender" json:"gender"`                             //
-	Email               NullString             `gorm:"column:email" json:"email"`                               //
+	Email               NullString             `gorm:"column:email;unique" json:"email"`                        //
+	ValidEmail          NullString             `gorm:"column:valid_email;unique;not null" json:"valid_email"`   //
 	Password            NullString             `gorm:"column:password" json:"password"`                         //
 	InternalShortNote   NullString             `gorm:"column:internal_short_note" json:"internal_short_note"`   //
 	InternalLongNote    NullString             `gorm:"column:internal_long_note" json:"internal_long_note"`     //
@@ -105,7 +108,8 @@ type CustomerRetailContactModelPreload struct {
 	Birthday          NullString `gorm:"column:birthday" json:"birthday"`                         //
 	Gender            int        `gorm:"column:gender" json:"gender"`                             //
 	Active            int        `gorm:"column:active" json:"active"`                             //
-	Email             NullString `gorm:"column:email" json:"email"`                               //
+	Email             NullString `gorm:"column:email;unique" json:"email"`                        //
+	ValidEmail        NullString `gorm:"column:valid_email;unique;not null" json:"valid_email"`   //
 	Password          NullString `gorm:"column:password" json:"password"`                         //
 	InternalShortNote NullString `gorm:"column:internal_short_note" json:"internal_short_note"`   //
 	InternalLongNote  NullString `gorm:"column:internal_long_note" json:"internal_long_note"`     //
@@ -139,10 +143,17 @@ func GetRandomSecret(tx *gorm.DB) string {
 }
 func (c *CustomerRetailModel) BeforeCreate(tx *gorm.DB) (err error) {
 	c.Secret = GetRandomSecret(tx)
+	if c.Email.Valid {
+		c.ValidEmail = c.Email
+	} else {
+		c.ValidEmail = NullStringInput("emailkosong_" + uuid.New().String() + "@annsbakehouse.com")
+	}
 	return
 }
-
 func (c *CustomerRetailModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	if c.Email.Valid {
+		c.ValidEmail = c.Email
+	}
 	return
 }
 

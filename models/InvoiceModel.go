@@ -352,7 +352,15 @@ type InvoiceListData struct {
 }
 
 type InvoiceInfoForm struct {
-	ID string `json:"id" binding:"required"`
+	Id string `json:"id" binding:"required"`
+}
+
+type OrderInfoForm struct {
+	Id string `json:"id" binding:"required"`
+}
+
+type PrintDeliveryInfoForm struct {
+	Id string `json:"id" binding:"required"`
 }
 
 type InvoiceInfoData struct {
@@ -399,6 +407,7 @@ type InvoiceInfoOrderData struct {
 	WarehouseId        string  `json:"warehouse_id"`
 	OrderDeliveryInfo  string  `json:"order_delivery_info"`
 	CourierTypeId      string  `json:"courier_type_id"`
+	CourierTypeName    string  `json:"courier_type_name"`
 	CourierSubtypeId   string  `json:"courier_subtype_id"`
 	DeliveryDate       string  `json:"delivery_date"`
 	DeliveryTimeId     string  `json:"delivery_time_id"`
@@ -421,8 +430,10 @@ type InvoiceInfoProductData struct {
 	Discount       float64 `json:"discount"`
 	Qty            int     `json:"qty"`
 	W2             string  `json:"w2"`
+	W3             string  `json:"w3"`
 	W4             string  `json:"w4"`
 	W2Info         string  `json:"w2_info"`
+	W3Info         string  `json:"w3_info"`
 	W4Info         string  `json:"w4_info"`
 	ProductInfo    string  `json:"product_info"`
 	ModelInfo      string  `json:"model_info"`
@@ -445,6 +456,15 @@ type InvoiceInfoNestedData struct {
 	Qty            int     `json:"qty"`
 	ProductInfo    string  `json:"product_info"`
 	ModelInfo      string  `json:"model_info"`
+}
+
+type KitchenInvoiceInfoNestedData struct {
+	OrderBarcode string `json:"order_barcode"`
+}
+
+type OrderInfoPrintPackageData struct {
+	ProductName string `json:"product_name"`
+	Qty         int    `json:"qty"`
 }
 
 type InvoiceInfoPaymentData struct {
@@ -472,8 +492,99 @@ type InvoiceInfoTrackingData struct {
 	TrackingSelectionName string `json:"tracking_selected_name"`
 }
 
+type OrderInfoData struct {
+	Id                  string  `json:"id"`
+	OrderInvoiceId      string  `json:"order_invoice_id"`
+	Invid               string  `json:"invid"`
+	Orderid             int     `json:"orderid"`
+	InvoiceDate         string  `json:"invoice_date"`
+	StatusOrder         int     `json:"status_order"`
+	StatusInv           int     `json:"status_inv"`
+	PaymentStatus       int     `json:"payment_status"`
+	CustomerRetailId    string  `json:"customer_retail_id"`
+	CustomerCorporateId string  `json:"customer_corporate_id"`
+	CustomerInfo        string  `json:"customer_info"`
+	ShortCode           string  `json:"short_code"`
+	Notes               string  `json:"notes"`
+	OnHold              int     `json:"on_hold"`
+	TotalPriceDiscount  float64 `json:"total_price_discount"`
+	TotalPrice          float64 `json:"total_price"`
+	TotalRetailPriceDm  float64 `json:"total_retail_price_dm"`
+	DeliveryFee         float64 `json:"delivery_fee"`
+	DeliveryDiscount    float64 `json:"delivery_discount"`
+	Paid                float64 `json:"paid"`
+	PromoValue          float64 `json:"promo_value"`
+	PromoDelivery       float64 `json:"promo_delivery"`
+	GrandTotal          float64 `json:"grand_total"`
+	SumGrandTotal       float64 `json:"sum_grand_total"`
+	PromoCode           string  `json:"promo_code"`
+	PromoName           string  `json:"promo_name"`
+	PromoInfo           string  `json:"promo_info"`
+	CustomerAddressId   string  `json:"customer_address_id"`
+	WarehouseId         string  `json:"warehouse_id"`
+	OrderDeliveryInfo   string  `json:"order_delivery_info"`
+	CourierTypeId       string  `json:"courier_type_id"`
+	CourierTypeName     string  `json:"courier_type_name"`
+	DeliveryDate        string  `json:"delivery_date"`
+	DeliveryTimeId      string  `json:"delivery_time_id"`
+	DeliveryStart       string  `json:"delivery_start"`
+	DeliveryEnd         string  `json:"delivery_end"`
+	SenderName          string  `json:"sender_name"`
+	SenderPhone         string  `json:"sender_phone"`
+	StatusDelivery      string  `json:"status_delivery"`
+}
+
+type OrderPrintDeliveryInfoData struct {
+	Id                  string  `json:"id"`
+	OrderInvoiceId      string  `json:"order_invoice_id"`
+	Invid               string  `json:"invid"`
+	Orderid             int     `json:"orderid"`
+	CustomerRetailId    string  `json:"customer_retail_id"`
+	CustomerInfo        string  `json:"customer_info"`
+	StatusOrder         int     `json:"status_order"`
+	ShortCode           string  `json:"short_code"`
+	Notes               string  `json:"notes"`
+	OnHold              int     `json:"on_hold"`
+	TotalPriceDiscount  float64 `json:"total_price_discount"`
+	TotalPrice          float64 `json:"total_price"`
+	TotalRetailPriceDm  float64 `json:"total_retail_price_dm"`
+	DeliveryFee         float64 `json:"delivery_fee"`
+	DeliveryDiscount    float64 `json:"delivery_discount"`
+	PromoValue          float64 `json:"promo_value"`
+	PromoDelivery       float64 `json:"promo_delivery"`
+	GrandTotal          float64 `json:"grand_total"`
+	PromoCode           string  `json:"promo_code"`
+	PromoName           string  `json:"promo_name"`
+	PromoInfo           string  `json:"promo_info"`
+	CustomerAddressId   string  `json:"customer_address_id"`
+	WarehouseId         string  `json:"warehouse_id"`
+	OrderDeliveryInfo   string  `json:"order_delivery_info"`
+	CourierTypeId       string  `json:"courier_type_id"`
+	CourierTypeName     string  `json:"courier_type_name"`
+	DeliveryDate        string  `json:"delivery_date"`
+	DeliveryTimeId      string  `json:"delivery_time_id"`
+	DeliveryStart       string  `json:"delivery_start"`
+	DeliveryEnd         string  `json:"delivery_end"`
+	SenderName          string  `json:"sender_name"`
+	SenderPhone         string  `json:"sender_phone"`
+	StatusDeliver       string  `json:"status_deliver"`
+	PrintDeliveryStatus int     `json:"print_delivery_status"`
+}
+
 func (c *InvoiceInfoData) TableName() string {
 	return "oi"
+}
+
+func (c *KitchenInvoiceInfoNestedData) TableName() string {
+	return "onp"
+}
+
+func (c *OrderPrintDeliveryInfoData) TableName() string {
+	return "oi"
+}
+
+func (c *OrderInfoData) TableName() string {
+	return "od"
 }
 
 func (c *InvoiceEditPaymentModel) TableName() string {
@@ -496,4 +607,22 @@ type InvoiceEditPaymentModel struct {
 	Note        NullString `gorm:"column:note" json:"note"`
 	UpdatedBy   NullString `gorm:"column:updated_by" json:"updated_by"`
 	UpdatedAt   time.Time  `gorm:"column:updated_at" json:"updated_at"`
+}
+
+type OrderNestedProductCancelModel struct {
+	Status    int        `gorm:"column:status" json:"status"`
+	UpdatedBy NullString `gorm:"column:updated_by" json:"updated_by"`
+	UpdatedAt *time.Time `gorm:"column:updated_at" json:"updated_at"`
+}
+
+func (c *OrderNestedProductCancelModel) TableName() string {
+	return "order_nested_product"
+}
+
+type PrintDeliveryInfoUpdateStatusForm struct {
+	Id string `json:"id" binding:"required"`
+}
+
+func (c *PrintDeliveryInfoUpdateStatusForm) TableName() string {
+	return "order_data"
 }

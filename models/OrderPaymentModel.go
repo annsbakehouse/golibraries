@@ -20,6 +20,7 @@ type OrderPaymentModel struct {
 	PaymentInfo    NullString `gorm:"column:payment_info" json:"payment_info"`           //
 	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`       //
 	MaxTimePay     string     `gorm:"column:max_time_pay" json:"max_time_pay"`           //
+	ApproveStatus  int        `gorm:"column:approve_status" json:"approve_status"`       //
 	CreatedBy      string     `gorm:"column:created_by;default:null;" json:"created_by"` //
 	CreatedAt      *time.Time `gorm:"column:created_at" json:"created_at"`               //
 	UpdatedBy      string     `gorm:"column:updated_by;default:null;" json:"updated_by"` //
@@ -40,6 +41,7 @@ type OrderPaymentModelPreload struct {
 	PaymentInfo    NullString `gorm:"column:payment_info" json:"payment_info"`         //
 	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`     //
 	MaxTimePay     *time.Time `gorm:"column:max_time_pay" json:"max_time_pay"`         //
+	ApproveStatus  int        `gorm:"column:approve_status" json:"approve_status"`     //
 }
 
 // TableName sets the insert table name for this struct type
@@ -53,11 +55,23 @@ func (c *OrderPaymentModelPreload) TableName() string {
 func (c *OrderPaymentModel) BeforeCreate(tx *gorm.DB) (err error) {
 	return
 }
-
+func (c *OrderPaymentModel) AfterCreate(tx *gorm.DB) (err error) {
+	// var m []OrderPaymentModel
+	// tx.Model(&m).Where("id=?", c.ID).Find(&m)
+	// ArangoDbInsert("order_payment", m)
+	return
+}
 func (c *OrderPaymentModel) BeforeUpdate(tx *gorm.DB) (err error) {
 	return
 }
-
+func (c *OrderPaymentModel) AfterUpdate(tx *gorm.DB) (err error) {
+	// var m []OrderPaymentModel
+	// tx.Raw("SELECT * FROM order_payment ? ", tx.Statement.Clauses["WHERE"]).Find(&m)
+	// for _, v := range m {
+	// 	ArangoDbUpdate("order_payment", fmt.Sprintf("u.id=='%v'", v.ID), v)
+	// }
+	return
+}
 func (c *OrderPaymentModel) BeforeDelete(tx *gorm.DB) (err error) {
 	// var model CustomerRetailModel
 	// tx.Model(&model).Where("id=?", c.ID).Update("deleted_by", ActiveUser)
