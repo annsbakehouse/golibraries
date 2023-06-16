@@ -244,7 +244,7 @@ func NumberFormat(number float64, decimals uint, decPoint, thousandsSep string) 
 }
 
 func RandStringFromDb(n int, db *gorm.DB, table string, cols string) string {
-
+	rand.Seed(time.Now().UnixNano())
 	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 	const (
 		letterIdxBits = 6                    // 6 bits to represent a letter index
@@ -372,4 +372,15 @@ func GetPackagingStatusMinimum(status []string) string {
 }
 func GetPackagingStatusMinimumQuery(status []string, tx *gorm.DB) string {
 	return ""
+}
+func StructToJson(b interface{}) map[string]string {
+	val := reflect.ValueOf(b)
+	output := make(map[string]string, 0)
+	for i := 0; i < val.Type().NumField(); i++ {
+		// skips fields without json tag
+		if tag, ok := val.Type().Field(i).Tag.Lookup("json"); ok {
+			output[val.Type().Field(i).Name] = tag
+		}
+	}
+	return output
 }

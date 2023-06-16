@@ -12,6 +12,7 @@ type DeliveryTimeWebModel struct {
 	WarehouseID    string     `gorm:"column:warehouse_id" json:"warehouse_id"`         //
 	CourierTypeID  string     `gorm:"column:courier_type_id" json:"courier_type_id"`   //
 	Ordering       int        `gorm:"column:ordering" json:"ordering"`                 //
+	HourBefore     float64    `gorm:"column:hour_before" json:"hour_before"`           //
 	CreatedBy      NullString `gorm:"column:created_by" json:"created_by"`             //
 	CreatedAt      time.Time  `gorm:"column:created_at" json:"created_at"`             //
 	UpdatedBy      NullString `gorm:"column:updated_by" json:"updated_by"`             //
@@ -24,6 +25,7 @@ type DeliveryTimeWebModelPreload struct {
 	WarehouseID      string                   `gorm:"column:warehouse_id" json:"warehouse_id"`         //
 	CourierTypeID    string                   `gorm:"column:courier_type_id" json:"courier_type_id"`   //
 	Ordering         int                      `gorm:"column:ordering" json:"ordering"`                 //
+	HourBefore       float64                  `gorm:"column:hour_before" json:"hour_before"`           //
 	DeliveryTimeInfo DeliveryTimeModelPreload `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;foreignKey:DeliveryTimeID;references:ID" json:"delivery_time_info"`
 	WarehouseInfo    WarehousePreloadModel    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;foreignKey:WarehouseID;references:ID" json:"warehouse_info"`
 	CourierTypeInfo  DeliveryTimeModelPreload `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;foreignKey:CourierTypeID;references:ID" json:"courier_type_info"`
@@ -42,17 +44,19 @@ func (u *DeliveryTimeWebModelPreload) TableName() string {
 }
 
 type DeliveryTimeWebSaveForm struct {
-	Ordering       int    `json:"ordering" binding:"required"`
-	DeliveryTimeID string `json:"delivery_time_id" binding:"required"` //
-	WarehouseID    string `json:"warehouse_id" binding:"required"`     //
-	CourierTypeID  string `json:"courier_type_id" binding:"required"`  //
+	Ordering       int     `json:"ordering" binding:"required"`
+	DeliveryTimeID string  `json:"delivery_time_id" binding:"required"` //
+	WarehouseID    string  `json:"warehouse_id" binding:"required"`     //
+	CourierTypeID  string  `json:"courier_type_id" binding:"required"`  //
+	HourBefore     float64 `json:"hour_before"`                         //
 }
 type DeliveryTimeWebUpdateForm struct {
-	Ordering       int    `json:"ordering" binding:"required"`
-	ID             string `json:"id" binding:"required"`               //
-	DeliveryTimeID string `json:"delivery_time_id" binding:"required"` //
-	WarehouseID    string `json:"warehouse_id" binding:"required"`     //
-	CourierTypeID  string `json:"courier_type_id" binding:"required"`  //
+	Ordering       int     `json:"ordering" binding:"required"`
+	ID             string  `json:"id" binding:"required"`               //
+	DeliveryTimeID string  `json:"delivery_time_id" binding:"required"` //
+	WarehouseID    string  `json:"warehouse_id" binding:"required"`     //
+	CourierTypeID  string  `json:"courier_type_id" binding:"required"`  //
+	HourBefore     float64 `json:"hour_before"`                         //
 }
 type DeliveryTimeWebUpdateInfo struct {
 	ID string `json:"id" binding:"required"`

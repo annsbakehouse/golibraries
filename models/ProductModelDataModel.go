@@ -80,7 +80,7 @@ func (p *ProductModelDataModel) BeforeDelete(tx *gorm.DB) (err error) {
 	return
 }
 
-//strcture input
+// strcture input
 type ProductModelDataModelInput struct {
 	ProductTypeId     string   `json:"product_type_id" binding:"required"`
 	ProductID         string   `json:"product_id" binding:"required"`
@@ -99,6 +99,7 @@ type ProductModelDataModelUpdate struct {
 	MOQINC            int      `json:"moq_inc"`
 	Platform          []string `json:"platform"`
 	Mid               string   `json:"mid"`
+	Active            int      `json:"active"`
 }
 type ProductModelDataModelInfo struct {
 	ID string `json:"id" binding:"required"`

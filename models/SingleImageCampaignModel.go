@@ -84,7 +84,7 @@ type SingleImageCampaignModelSave struct {
 type SingleImageCampaignModelUpdate struct {
 	ID                  string                                 `json:"id" binding:"required"`
 	Campaign_Name       string                                 `json:"campaign_name"`
-	Active              int                                    `json:"active"  binding:"required"`
+	Active              int                                    `json:"active"  binding:"omitempty"`
 	Display_From        string                                 `json:"display_from"  binding:"required"`
 	Display_Until       string                                 `json:"display_until"  binding:"required"`
 	Usage               int                                    `json:"usage"`

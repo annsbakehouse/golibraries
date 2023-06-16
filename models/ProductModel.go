@@ -71,7 +71,7 @@ func (p *ProductModel) AfterDelete(tx *gorm.DB) (err error) {
 	return
 }
 
-//strcture input
+// strcture input
 type ProductModelInput struct {
 	Name          string `json:"name" binding:"required"`
 	PID           string `json:"pid" binding:"required"`
@@ -89,5 +89,7 @@ type ProductModelInfo struct {
 	ID string `json:"id" binding:"required"`
 }
 type ProductModelInfoByCourierType struct {
-	CourierTypeID string `json:"courier_type_id" binding:"required"`
+	CourierTypeID     string `json:"courier_type_id" binding:"required"`
+	CustomerAddressID string `json:"customer_address_id"`
+	WarehouseID       string `json:"warehouse_id"`
 }

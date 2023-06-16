@@ -46,11 +46,25 @@ type ContactPersonPreload struct {
 	ContactCustomerRetailInfo CustomerRetailContactModelPreload `gorm:"foreignKey:CustomerRetailId;references:ID" json:"contact_customer_retail_info"`
 }
 
+type ContactPersonCustomPreload struct {
+	ID                        string                                  `gorm:"column:id;primary_key" json:"id"`
+	CustomerRetailId          string                                  `gorm:"column:customer_retail_id" json:"customer_retail_id"`
+	CustomerCorporateId       string                                  `gorm:"column:customer_corporate_id" json:"customer_corporate_id"`
+	DefaultSenderName         NullString                              `gorm:"column:default_sender_name" json:"default_sender_name"`
+	DefaultSenderPhone        NullString                              `gorm:"column:default_sender_phone" json:"default_sender_phone"`
+	Active                    uint64                                  `gorm:"column:active" json:"active"`
+	ContactCustomerRetailInfo CustomerRetailContactCustomModelPreload `gorm:"foreignKey:CustomerRetailId;references:ID" json:"contact_customer_retail_info"`
+}
+
 func (c *ContactPersonModel) TableName() string {
 	return "contact_person"
 }
 
 func (c *ContactPersonPreload) TableName() string {
+	return "contact_person"
+}
+
+func (c *ContactPersonCustomPreload) TableName() string {
 	return "contact_person"
 }
 

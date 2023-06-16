@@ -18,12 +18,12 @@ type OrderInvoiceTrackingModel struct {
 }
 
 type OrderInvoiceTrackingModelPreload struct {
-	ID                    string                                       `gorm:"column:id;primary_key" json:"id"`                           //
-	OrderInvoiceID        string                                       `gorm:"column:order_invoice_id" json:"order_invoice_id"`           //
-	TrackingTitleID       string                                       `gorm:"column:tracking_title_id" json:"tracking_title_id"`         //
-	TrackingSelectionID   string                                       `gorm:"column:tracking_selection_id" json:"tracking_selection_id"` //
-	TrackingTitleInfo     ProductContentParameterTitleModelPreload     `gorm:"->;foreignKey:ID;references:TrackingTitleID" json:"tracking_title_info"`
-	TrackingSelectionInfo ProductContentParameterSelectionModelPreload `gorm:"->;foreignKey:ID;references:TrackingSelectionID" json:"tracking_selection_info"`
+	ID                    string                             `gorm:"column:id;primary_key" json:"id"`                           //
+	OrderInvoiceID        string                             `gorm:"column:order_invoice_id" json:"order_invoice_id"`           //
+	TrackingTitleID       string                             `gorm:"column:tracking_title_id" json:"tracking_title_id"`         //
+	TrackingSelectionID   string                             `gorm:"column:tracking_selection_id" json:"tracking_selection_id"` //
+	TrackingTitleInfo     OrderTrackingTitleModelPreload     `gorm:"->;foreignKey:ID;references:TrackingTitleID" json:"tracking_title_info"`
+	TrackingSelectionInfo OrderTrackingSelectionModelPreload `gorm:"->;foreignKey:ID;references:TrackingSelectionID" json:"tracking_selection_info"`
 }
 
 // TableName sets the insert table name for this struct type

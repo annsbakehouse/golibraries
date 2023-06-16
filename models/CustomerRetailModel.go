@@ -117,6 +117,35 @@ type CustomerRetailContactModelPreload struct {
 	ValidUntil        NullString `gorm:"column:valid_until" json:"valid_until"`                   //
 }
 
+type CustomerRetailContactCustomModelPreload struct {
+	ID                 string                 `gorm:"column:id;primary_key" json:"id"` //
+	CRID               NullString             `gorm:"column:crid" json:"crid"`         //
+	Name               NullString             `gorm:"column:name" json:"name"`         //
+	AltName            NullString             `gorm:"column:alt_name" json:"alt_name"` //
+	PhoneCountryID1    NullString             `gorm:"column:phone_1_country_id" json:"phone_1_country_id"`
+	PhoneCountryCode1  NullString             `gorm:"column:phone_1_country_code" json:"phone_1_country_code"` //
+	Phone1             NullString             `gorm:"column:phone_1" json:"phone_1"`                           //
+	PhoneCountryID2    NullString             `gorm:"column:phone_2_country_id" json:"phone_2_country_id"`     //
+	PhoneCountryCode2  NullString             `gorm:"column:phone_2_country_code" json:"phone_2_country_code"` //
+	Phone2             NullString             `gorm:"column:phone_2" json:"phone_2"`                           //
+	PhoneNote2         NullString             `gorm:"column:phone_2_note" json:"phone_2_note"`                 //
+	PhoneCountryID3    NullString             `gorm:"column:phone_3_country_id" json:"phone_3_country_id"`     //
+	PhoneCountryCode3  NullString             `gorm:"column:phone_3_country_code" json:"phone_3_country_code"` //
+	Phone3             NullString             `gorm:"column:phone_3" json:"phone_3"`                           //
+	PhoneNote3         NullString             `gorm:"column:phone_3_note" json:"phone_3_note"`                 //
+	Birthday           NullString             `gorm:"column:birthday" json:"birthday"`                         //
+	Gender             int                    `gorm:"column:gender" json:"gender"`                             //
+	Active             int                    `gorm:"column:active" json:"active"`                             //
+	Email              NullString             `gorm:"column:email;unique" json:"email"`                        //
+	ValidEmail         NullString             `gorm:"column:valid_email;unique;not null" json:"valid_email"`   //
+	Password           NullString             `gorm:"column:password" json:"password"`                         //
+	InternalShortNote  NullString             `gorm:"column:internal_short_note" json:"internal_short_note"`   //
+	InternalLongNote   NullString             `gorm:"column:internal_long_note" json:"internal_long_note"`     //
+	CustomersLevelID   NullString             `gorm:"column:customers_level_id" json:"customers_level_id"`     //
+	ValidUntil         NullString             `gorm:"column:valid_until" json:"valid_until"`                   //
+	CustomersLevelInfo CustomerLevelModelInfo `gorm:"foreignKey:CustomersLevelID;references:ID" json:"customer_level_info"`
+}
+
 // TableName sets the insert table name for this struct type
 func (c *CustomerRetailModel) TableName() string {
 	return "customer_retail"
@@ -125,6 +154,9 @@ func (c *CustomerRetailModelPreload) TableName() string {
 	return "customer_retail"
 }
 func (c *CustomerRetailContactModelPreload) TableName() string {
+	return "customer_retail"
+}
+func (c *CustomerRetailContactCustomModelPreload) TableName() string {
 	return "customer_retail"
 }
 

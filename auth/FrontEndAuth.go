@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -59,6 +60,8 @@ func FrontEndTokenCheck(c *gin.Context) {
 		c.Abort()
 		return
 	}
+	clientip := c.ClientIP()
+	log.Println(clientip)
 	// clientip := c.ClientIP()
 	// fmt.Println("Client IP :", clientip)
 	// if textSplit[1] != clientip {

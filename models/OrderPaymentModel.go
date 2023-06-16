@@ -19,7 +19,7 @@ type OrderPaymentModel struct {
 	PaymentID      NullString `gorm:"column:payment_id" json:"payment_id"`               //
 	PaymentInfo    NullString `gorm:"column:payment_info" json:"payment_info"`           //
 	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`       //
-	MaxTimePay     string     `gorm:"column:max_time_pay" json:"max_time_pay"`           //
+	MaxTimePay     NullString `gorm:"column:max_time_pay" json:"max_time_pay"`           //
 	ApproveStatus  int        `gorm:"column:approve_status" json:"approve_status"`       //
 	CreatedBy      string     `gorm:"column:created_by;default:null;" json:"created_by"` //
 	CreatedAt      *time.Time `gorm:"column:created_at" json:"created_at"`               //
@@ -42,6 +42,25 @@ type OrderPaymentModelPreload struct {
 	PaymentStatus  int        `gorm:"column:payment_status" json:"payment_status"`     //
 	MaxTimePay     *time.Time `gorm:"column:max_time_pay" json:"max_time_pay"`         //
 	ApproveStatus  int        `gorm:"column:approve_status" json:"approve_status"`     //
+}
+
+type OrderPaymentForm struct {
+	PaymentTypeId string  `json:"payment_type_id" binding:"required"`
+	PaymentDate   string  `json:"payment_date" binding:"required"`
+	Value         float64 `json:"value" binding:"omitempty"`
+	Status        int     `json:"status;default:0" binding:"omitempty"`
+	Note          string  `json:"note" binding:"required"`
+	PaymentStatus int     `json:"payment_status;default:0" binding:"omitempty"`
+}
+
+type OrderPaymentEditForm struct {
+	Id            string  `json:"id" binding:"required"`
+	PaymentTypeId string  `json:"payment_type_id" binding:"required"`
+	PaymentDate   string  `json:"payment_date" binding:"required"`
+	Value         float64 `json:"value" binding:"omitempty"`
+	Status        int     `json:"status;default:0" binding:"omitempty"`
+	Note          string  `json:"note" binding:"required"`
+	PaymentStatus int     `json:"payment_status;default:0" binding:"omitempty"`
 }
 
 // TableName sets the insert table name for this struct type

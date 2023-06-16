@@ -50,11 +50,36 @@ type CustomerCorporateModelPreload struct {
 	AccountExecutiveInfo AccountExecutiveModelPreload `gorm:"foreignKey:AccountExecutiveId;references:ID" json:"account_executive_info"`
 }
 
+type CustomerCorporateCustomModelPreload struct {
+	ID                   string                       `gorm:"column:id;primary_key" json:"id"`                   //
+	CCID                 NullString                   `gorm:"column:ccid" json:"ccid"`                           //
+	AltName              NullString                   `gorm:"column:alt_name" json:"alt_name"`                   //
+	AutoOrderNote        NullString                   `gorm:"column:auto_order_note" json:"auto_order_note"`     //
+	AutoInvoiceNote      NullString                   `gorm:"column:auto_invoice_note" json:"auto_invoice_note"` //
+	Active               int                          `gorm:"column:active" json:"active"`                       //
+	EmployeeId           NullString                   `gorm:"column:employee_id" json:"employee_id"`             //
+	CoaId                NullString                   `gorm:"column:coa_id" json:"coa_id"`                       //
+	MaxAr                float32                      `gorm:"column:max_ar" json:"max_ar"`                       //
+	BillingAddress       NullString                   `gorm:"column:billing_address" json:"billing_address"`     //
+	CustomerRetailId     string                       `gorm:"column:customer_retail_id" json:"customer_retail_id"`
+	OverdueLimit         int                          `gorm:"column:overdue_limit" json:"overdue_limit"`
+	CustomerRetailInfo   CustomerRetailModelPreload   `gorm:"foreignKey:CustomerRetailId;references:ID" json:"customer_retail_info"`
+	AccountExecutiveId   NullString                   `gorm:"column:account_executive_id" json:"account_executive_id"`
+	PaymentTypeId        NullString                   `gorm:"column:payment_type_id" json:"payment_type_id"`
+	ContactPersonInfo    []ContactPersonCustomPreload `gorm:"foreignKey:CustomerCorporateId;references:ID" json:"contact_persons"`
+	PaymentTypeInfo      PaymentTypeModelPreload      `gorm:"foreignKey:PaymentTypeId;references:ID" json:"payment_type_info"`
+	AccountExecutiveInfo AccountExecutiveModelPreload `gorm:"foreignKey:AccountExecutiveId;references:ID" json:"account_executive_info"`
+}
+
 func (c *CustomerCorporateModel) TableName() string {
 	return "customer_corporate"
 }
 
 func (c *CustomerCorporateModelPreload) TableName() string {
+	return "customer_corporate"
+}
+
+func (c *CustomerCorporateCustomModelPreload) TableName() string {
 	return "customer_corporate"
 }
 
